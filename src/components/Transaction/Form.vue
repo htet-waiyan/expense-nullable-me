@@ -2,6 +2,7 @@
     <div>
     <div class="category-form-container" v-if="showCategoryForm">
         <category-form
+          @created="handleNewCategory"
           @cancel="hideCategoryForm"/>
     </div>
     <div class="form-container" v-else>
@@ -18,8 +19,11 @@
                 <div class="column control">
                     <select name="category" id="category" class="input"
                       v-model="expenseForm.category">
-                        <option>Transportation</option>
-                        <option>Food & Drink</option>
+                        <option v-for="category in categories"
+                          :key="category._id"
+                          :value="category._id">
+                          {{ category.title }}
+                        </option>
                     </select>
                 </div>
                 <div class="column is-one-fifth control">
@@ -64,9 +68,13 @@
 </template>
 
 <script>
+/* eslint no-underscore-dangle: "error" */
 import 'vue-awesome/icons/plus';
 import 'vue-awesome/icons/calendar-plus';
+import { createNamespacedHelpers } from 'vuex';
 import CategoryForm from './CategoryForm.vue';
+
+const { mapActions, mapGetters } = createNamespacedHelpers('transaction');
 
 export default {
   name: 'TransactionForm',
@@ -94,13 +102,24 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapGetters({ categories: 'all' }),
+  },
   methods: {
+    ...mapActions(['fetchAllCategories']),
     goToCategoryForm() {
       this.showCategoryForm = true;
     },
     hideCategoryForm() {
       this.showCategoryForm = false;
     },
+    handleNewCategory(newCategory) {
+      this.showCategoryForm = false;
+      this.expenseForm.category = newCategory._id;
+    },
+  },
+  created() {
+    this.fetchAllCategories();
   },
 };
 </script>

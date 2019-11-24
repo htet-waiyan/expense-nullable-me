@@ -2,15 +2,27 @@
   <div class="category-container">
       <div class="field">
           <label for="name" class="label">Category Name</label>
-          <div class="control"
-            :class="{'has-icons-right': !title}">
+          <div class="control has-icons-right">
               <input type="text" class="input"
-                :class="{'is-danger': !title}"
+                :class="{'is-danger': !title || isNameTaken}"
+                @input="getNameCount"
                 v-model="title">
-              <span v-if="!title" :class="{'icon is-small is-right': !title}">
+              <span v-if="nameValidating"
+                class="icon is-small is-right">
+                <v-icon name="spinner"/>
+              </span>
+              <span v-if="!title || isNameTaken"
+                class="icon is-small is-right">
                 <v-icon name="exclamation-triangle"/>
               </span>
+              <span v-if="title && !isNameTaken && !nameValidating"
+                style="color: green"
+                class="icon is-small is-right">
+                <v-icon name="check"/>
+              </span>
               <p v-if="!title" :class="{'help is-danger': !title}">Name is required</p>
+              <p v-if="isNameTaken"
+                :class="{'help is-danger': isNameTaken}">Name is not available</p>
           </div>
       </div>
       <div class="field">
@@ -75,7 +87,17 @@ import 'vue-awesome/icons/dumbbell';
 import 'vue-awesome/icons/baby';
 import 'vue-awesome/icons/tv';
 import 'vue-awesome/icons/exclamation-triangle';
+import 'vue-awesome/icons/spinner';
+import 'vue-awesome/icons/check';
+import 'vue-awesome/icons/hamburger';
+import 'vue-awesome/icons/plug';
+import 'vue-awesome/icons/shopping-cart';
+import 'vue-awesome/icons/taxi';
+import 'vue-awesome/icons/plane';
+import 'vue-awesome/icons/shopping-bag';
 import { createNamespacedHelpers } from 'vuex';
+import { debounce } from 'lodash';
+import http from '../../http';
 
 const { mapActions } = createNamespacedHelpers('transaction');
 
@@ -130,6 +152,8 @@ export default {
       title: '',
       colorLabel: '',
       icon: '',
+      isNameTaken: false,
+      nameValidating: false,
     };
   },
   computed: {
@@ -137,7 +161,7 @@ export default {
       return this.$store.state.loading;
     },
     isFormValid() {
-      return !!this.title;
+      return !!this.title && !this.isNameTaken;
     },
   },
   methods: {
@@ -160,6 +184,18 @@ export default {
           this.$emit('created', data);
         });
     },
+    getNameCount: debounce(function () {
+      this.nameValidating = true;
+      http.get(`/category/count?name=${this.title}`)
+        .then((response) => {
+          this.nameValidating = false;
+          this.isNameTaken = !!response.data.count;
+        })
+        .catch(() => {
+          this.$store.dispatch('setNetworkError', true);
+          this.nameValidating = false;
+        });
+    }, 500),
   },
 };
 </script>

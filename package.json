@@ -11,6 +11,7 @@
     "axios": "^0.19.0",
     "bulma": "^0.8.0",
     "core-js": "^3.3.2",
+    "lodash": "^4.17.15",
     "register-service-worker": "^1.6.2",
     "v-calendar": "^0.9.7",
     "vue": "^2.6.10",
@@ -39,7 +40,17 @@
       "plugin:vue/essential",
       "@vue/airbnb"
     ],
-    "rules": {},
+    "rules": {
+      "no-underscore-dangle": [
+        "error",
+        {
+          "allow": [
+            "_id",
+            "_state"
+          ]
+        }
+      ]
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
