@@ -1,8 +1,15 @@
+import 'bulma/css/bulma.min.css';
+import 'v-calendar/lib/v-calendar.min.css';
 import Vue from 'vue';
+import Icon from 'vue-awesome/components/Icon.vue';
+import VCalendar from 'v-calendar';
 import App from './App.vue';
 import router from './router';
 import store from './store';
 import './registerServiceWorker';
+
+Vue.component('v-icon', Icon);
+Vue.use(VCalendar);
 
 Vue.config.productionTip = false;
 
