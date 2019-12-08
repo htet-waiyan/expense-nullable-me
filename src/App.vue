@@ -1,7 +1,7 @@
 <template>
   <div>
-    <navbar/>
-    <div class="is-fluid container">
+    <navbar v-if="showNav"/>
+    <div>
       <div class="columns is-centered">
         <div class="column is-half">
           <router-view/>
@@ -19,5 +19,17 @@ export default {
   components: {
     Navbar,
   },
+  computed: {
+    showNav() {
+      return this.$route.matched.length === 0
+        || this.$route.matched[0].props.default.showNav;
+    },
+  },
 };
 </script>
+
+<style>
+  .input-error {
+    border: 2px solid #ddd;
+  }
+</style>

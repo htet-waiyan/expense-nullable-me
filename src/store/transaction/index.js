@@ -2,14 +2,21 @@
 import {
   SET_ALL_CATEGORIES,
   ADD_NEW_CATEGORY,
+  SET_MTD_EXPENSE_TOTAL,
+  SET_SAVING,
+  SET_MTD_TRANSACTIONS,
 } from './type.mutation';
 
-import http from '../../http';
+import { http } from '../../http';
 
 const CATEGORY_URL = '/category';
+const EXPENSE_URL = '/expense';
 
 const state = {
   all: [],
+  expenseTotal: 0,
+  saving: 0,
+  transactions: [],
 };
 
 const mutations = {
@@ -18,6 +25,15 @@ const mutations = {
   },
   [ADD_NEW_CATEGORY](_state, payload) {
     _state.all.push(payload);
+  },
+  [SET_MTD_EXPENSE_TOTAL](_state, payload = 0) {
+    _state.expenseTotal = payload;
+  },
+  [SET_SAVING](_state, payload = 0) {
+    _state.saving = payload;
+  },
+  [SET_MTD_TRANSACTIONS](_state, payload = []) {
+    _state.transactions = payload;
   },
 };
 
@@ -53,10 +69,30 @@ const actions = {
         return error;
       });
   },
+  fetchMtdTransactions({ commit, dispatch }) {
+    dispatch('setRequestLoading', true, { root: true });
+    return http.get(`${EXPENSE_URL}/mtd`)
+      .then((response) => {
+        dispatch('setRequestLoading', false, { root: true });
+        commit(SET_MTD_TRANSACTIONS, response.data.data.transactions);
+        commit(SET_SAVING, response.data.data.saving);
+        commit(SET_MTD_EXPENSE_TOTAL, response.data.data.expense);
+      })
+      .catch((error) => {
+        if (!error.status || error.status === 500) {
+          dispatch('setNetworkError', true, { root: true });
+        }
+        dispatch('setRequestLoading', false, { root: true });
+        return error;
+      });
+  },
 };
 
 const getters = {
   all: _state => _state.all,
+  expenseTotal: _state => _state.expenseTotal,
+  saving: _state => _state.saving,
+  transactions: _state => _state.transactions,
 };
 
 export default {

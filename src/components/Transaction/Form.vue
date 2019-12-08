@@ -9,8 +9,12 @@
         <div class="field">
             <label class="label">Amount</label>
             <div class="control">
+                <span v-if="invalidExpenseAmount"
+                  :class="form-error-text">Invalid expense amount</span>
                 <input type="number" class="input" id="amount" placeholder="Expense Amount"
-                  v-model="expenseForm.amount"/>
+                  :class="{'is-danger': invalidExpenseAmount}"
+                  @input="handleExpenseAmount"
+                  v-model="amount"/>
             </div>
         </div>
         <div class="field">
@@ -18,7 +22,7 @@
             <div class="columns is-mobile">
                 <div class="column control">
                     <select name="category" id="category" class="input"
-                      v-model="expenseForm.category">
+                      v-model="category">
                         <option v-for="category in categories"
                           :key="category._id"
                           :value="category._id">
@@ -52,12 +56,14 @@
             <label for="note" class="label">Note</label>
             <div class="control">
                 <textarea class="textarea"
-                  v-model="expenseForm.description"></textarea>
+                  v-model="description"></textarea>
             </div>
         </div>
         <div class="field is-grouped">
             <div class="control">
-              <button class="button is-dark">Submit</button>
+              <button class="button is-dark"
+                :disabled="hasFormError"
+                @click="saveNewExpense">Submit</button>
             </div>
             <div class="control">
               <button class="button">Cancel</button>
@@ -68,11 +74,12 @@
 </template>
 
 <script>
-/* eslint no-underscore-dangle: "error" */
+/* eslint no-underscore-dangle: 0 */
 import 'vue-awesome/icons/plus';
 import 'vue-awesome/icons/calendar-plus';
 import { createNamespacedHelpers } from 'vuex';
 import CategoryForm from './CategoryForm.vue';
+import { http } from '../../http';
 
 const { mapActions, mapGetters } = createNamespacedHelpers('transaction');
 
@@ -94,16 +101,18 @@ export default {
           color: '#fafafa',
         },
       },
-      expenseForm: {
-        amount: '',
-        category: '',
-        description: '',
-        timestamp: '',
-      },
+      amount: '',
+      category: '',
+      description: '',
+      timestamp: '',
+      invalidExpenseAmount: false,
     };
   },
   computed: {
     ...mapGetters({ categories: 'all' }),
+    hasFormError() {
+      return this.invalidExpenseAmount;
+    },
   },
   methods: {
     ...mapActions(['fetchAllCategories']),
@@ -113,9 +122,30 @@ export default {
     hideCategoryForm() {
       this.showCategoryForm = false;
     },
+    /* eslint no-underscore-dangle: 0 */
     handleNewCategory(newCategory) {
       this.showCategoryForm = false;
-      this.expenseForm.category = newCategory._id;
+      this.category = newCategory._id;
+    },
+    handleExpenseAmount(e) {
+      const expenseAmount = +e.target.value;
+      if (expenseAmount < 0) {
+        this.invalidExpenseAmount = true;
+      } else {
+        this.invalidExpenseAmount = false;
+      }
+    },
+    saveNewExpense() {
+      const payload = {
+        amount: this.amount,
+        category: this.category,
+        description: this.description,
+      };
+
+      return http.post('/expense', payload)
+        .then(() => {
+          // TODO: redirect to MTD list
+        });
     },
   },
   created() {
@@ -123,3 +153,10 @@ export default {
   },
 };
 </script>
+
+<style>
+  .form-error-text {
+    font-size: 13px;
+    font-style: italic;
+  }
+</style>

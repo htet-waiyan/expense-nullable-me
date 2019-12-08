@@ -97,7 +97,7 @@ import 'vue-awesome/icons/plane';
 import 'vue-awesome/icons/shopping-bag';
 import { createNamespacedHelpers } from 'vuex';
 import { debounce } from 'lodash';
-import http from '../../http';
+import { http } from '../../http';
 
 const { mapActions } = createNamespacedHelpers('transaction');
 

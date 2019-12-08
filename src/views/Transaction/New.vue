@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="is-fluid container">
         <transaction-form></transaction-form>
     </div>
 </template>
