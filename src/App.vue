@@ -32,4 +32,10 @@ export default {
   .input-error {
     border: 2px solid #ddd;
   }
+  .mt-2 {
+    margin-top: 2em;
+  }
+  .bd-b-1 {
+    border-bottom: 1px solid #ddd;
+  }
 </style>

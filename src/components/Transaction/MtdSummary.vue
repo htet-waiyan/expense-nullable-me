@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="has-background-grey-darker mtd-container is-fluid container">
         <div class="columns">
           <div class="column">
             <h3 class="title is-5 has-text-white">

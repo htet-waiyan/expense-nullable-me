@@ -1,15 +1,26 @@
 <template>
-    <div class="mtd-container is-fluid container">
-       <mtd-summary
-         :month="statementMonth"
-         :saving="saving"
-         :expense="expenseTotal"/>
+  <div>
+  <div class="columns">
+    <div class="column">
+      <mtd-summary
+        :month="statementMonth"
+        :saving="saving"
+        :expense="expenseTotal"/>
     </div>
+  </div>
+  <div class="columns">
+    <div class="column">
+      <mtd-transactions
+        :transactions="transactions"/>
+    </div>
+  </div>
+  </div>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
 import MtdSummary from './MtdSummary.vue';
+import MtdTransactions from './MtdTransactions.vue';
 import constant from '../../constant';
 
 const { mapActions, mapGetters } = createNamespacedHelpers('transaction');
@@ -23,6 +34,7 @@ export default {
   },
   components: {
     MtdSummary,
+    MtdTransactions,
   },
   computed: {
     ...mapGetters(['expenseTotal', 'saving', 'transactions']),

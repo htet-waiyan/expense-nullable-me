@@ -6,10 +6,12 @@ import VCalendar from 'v-calendar';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import dateFormatter from './mixins/dateformatter';
 import './registerServiceWorker';
 
 Vue.component('v-icon', Icon);
 Vue.use(VCalendar);
+Vue.mixin(dateFormatter);
 
 Vue.config.productionTip = false;
 

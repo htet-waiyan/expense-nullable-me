@@ -1,5 +1,5 @@
 <template>
-    <div class="has-background-grey-dark mtd-container">
+    <div class="mtd-container">
       <mtd-expense-list></mtd-expense-list>
     </div>
 </template>
