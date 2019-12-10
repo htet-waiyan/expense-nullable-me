@@ -44,10 +44,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['fetchMtdTransactions']),
+    ...mapActions(['fetchMtdTransactions', 'fetchAllCategories']),
   },
   created() {
     this.fetchMtdTransactions();
+    this.fetchAllCategories();
   },
 };
 </script>

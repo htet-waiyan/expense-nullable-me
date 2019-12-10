@@ -5,7 +5,8 @@
                 <h5 class="title is-5">Transactions</h5>
             </div>
             <div class="column is-one-fifth has-text-right">
-                <button class="button is-white">
+                <button class="button is-white"
+                  @click="rediectToForm">
                     <v-icon name="plus-circle"/>
                 </button>
             </div>
@@ -35,6 +36,11 @@ export default {
     transactions: {
       type: Array,
       default: () => [],
+    },
+  },
+  methods: {
+    rediectToForm() {
+      this.$router.push('/transaction/new');
     },
   },
 };

@@ -66,7 +66,8 @@
                 @click="saveNewExpense">Submit</button>
             </div>
             <div class="control">
-              <button class="button">Cancel</button>
+              <button class="button"
+                @click="goBackToMtdList">Cancel</button>
             </div>
         </div>
     </div>
@@ -81,7 +82,7 @@ import { createNamespacedHelpers } from 'vuex';
 import CategoryForm from './CategoryForm.vue';
 import { http } from '../../http';
 
-const { mapActions, mapGetters } = createNamespacedHelpers('transaction');
+const { mapGetters } = createNamespacedHelpers('transaction');
 
 export default {
   name: 'TransactionForm',
@@ -115,7 +116,6 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['fetchAllCategories']),
     goToCategoryForm() {
       this.showCategoryForm = true;
     },
@@ -145,11 +145,12 @@ export default {
       return http.post('/expense', payload)
         .then(() => {
           // TODO: redirect to MTD list
+          this.goBackToMtdList();
         });
     },
-  },
-  created() {
-    this.fetchAllCategories();
+    goBackToMtdList() {
+      this.$router.push('/transaction');
+    },
   },
 };
 </script>
