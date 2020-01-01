@@ -3,6 +3,11 @@ import VueRouter from 'vue-router';
 import Transaction from '../views/Transaction/Index.vue';
 import TransactionNew from '../views/Transaction/New.vue';
 import TransactionMtd from '../views/Transaction/MtdList.vue';
+import Allocation from '../views/Allocation/Index.vue';
+import AllocationNew from '../views/Allocation/New.vue';
+import AllocationList from '../views/Allocation/List.vue';
+import Income from '../views/Income/Index.vue';
+import IncomeNew from '../views/Income/New.vue';
 import IndexPage from '../views/Login/Index.vue';
 
 Vue.use(VueRouter);
@@ -14,14 +19,6 @@ const routes = [
     component: IndexPage,
     props: { showNav: false },
   },
-  // {
-  //   path: '/about',
-  //   name: 'about',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  // },
   {
     path: '/transaction',
     name: 'transaction',
@@ -38,6 +35,40 @@ const routes = [
         path: 'new',
         name: 'TransactionNew',
         component: TransactionNew,
+        props: { showNav: true },
+      },
+    ],
+  },
+  {
+    path: '/allocation',
+    name: 'allocation',
+    component: Allocation,
+    props: { showNav: true },
+    children: [
+      {
+        path: '',
+        name: 'AllocationList',
+        component: AllocationList,
+        props: { showNav: true },
+      },
+      {
+        path: 'new',
+        name: 'AllocationNew',
+        component: AllocationNew,
+        props: { showNav: true },
+      },
+    ],
+  },
+  {
+    path: '/income',
+    name: 'income',
+    component: Income,
+    props: { showNav: true },
+    children: [
+      {
+        path: 'new',
+        name: 'IncomeNew',
+        component: IncomeNew,
         props: { showNav: true },
       },
     ],

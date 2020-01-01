@@ -8,5 +8,8 @@ export default {
     DDFromX(value) {
       return moment(value, 'X').format('DD');
     },
+    weekDayDayMonth(value) {
+      return moment(value, 'YYYYMMDD').format('dddd, DD MMM YYYY');
+    },
   },
 };

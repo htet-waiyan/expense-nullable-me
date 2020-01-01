@@ -7,11 +7,13 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import dateFormatter from './mixins/dateformatter';
+import numberFormatter from './mixins/numberFormatter';
 import './registerServiceWorker';
 
 Vue.component('v-icon', Icon);
 Vue.use(VCalendar);
 Vue.mixin(dateFormatter);
+Vue.mixin(numberFormatter);
 
 Vue.config.productionTip = false;
 

@@ -27,7 +27,7 @@
       </div>
       <div class="field">
           <div class="control">
-              <compact v-model="colors"/>
+            <compact v-model="colors"/>
           </div>
       </div>
       <div class="field icon-container">

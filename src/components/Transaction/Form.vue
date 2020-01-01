@@ -31,12 +31,20 @@
                     </select>
                 </div>
                 <div class="column is-one-fifth control">
-                    <button class="button"
-                      @click="goToCategoryForm">
-                        <v-icon name="plus"/>
-                    </button>
+                  <button class="button is-white"
+                    @click="goToCategoryForm">
+                      <v-icon name="plus"/>
+                  </button>
                 </div>
             </div>
+        </div>
+        <div class="field">
+          <label for="tags" class="label">
+            Label
+          </label>
+          <div class="control">
+            <tag-cloud v-model="tags" multiple/>
+          </div>
         </div>
         <div class="field">
             <label class="label">Date</label>
@@ -60,14 +68,10 @@
             </div>
         </div>
         <div class="field is-grouped">
-            <div class="control">
-              <button class="button is-dark"
+            <div class="control is-expanded">
+              <button class="button is-dark is-fullwidth"
                 :disabled="hasFormError"
                 @click="saveNewExpense">Submit</button>
-            </div>
-            <div class="control">
-              <button class="button"
-                @click="goBackToMtdList">Cancel</button>
             </div>
         </div>
     </div>
@@ -80,6 +84,7 @@ import 'vue-awesome/icons/plus';
 import 'vue-awesome/icons/calendar-plus';
 import { createNamespacedHelpers } from 'vuex';
 import CategoryForm from './CategoryForm.vue';
+import TagCloud from '../TagCloud.vue';
 import { http } from '../../http';
 
 const { mapGetters } = createNamespacedHelpers('transaction');
@@ -88,6 +93,7 @@ export default {
   name: 'TransactionForm',
   components: {
     CategoryForm,
+    TagCloud,
   },
   data() {
     return {
@@ -106,6 +112,7 @@ export default {
       category: '',
       description: '',
       timestamp: '',
+      tags: [],
       invalidExpenseAmount: false,
     };
   },

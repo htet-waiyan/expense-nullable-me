@@ -1,7 +1,8 @@
 <template>
     <div class="columns is-mobile is-vcentered">
       <div class="column is-one-fifth">
-        <button class="button is-white">
+        <button class="button is-white"
+          @click="back">
           <v-icon name="chevron-left" />
         </button>
       </div>
@@ -22,5 +23,10 @@ import 'vue-awesome/icons/user';
 
 export default {
   name: 'Navbar',
+  methods: {
+    back() {
+      this.$router.go(-1);
+    },
+  },
 };
 </script>

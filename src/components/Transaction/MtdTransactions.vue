@@ -1,6 +1,6 @@
 <template>
   <div class="transaction-list has-text-grey-dark is-fluid container">
-      <div class="columns bd-b-1 is-mobile is-vcentered">
+      <div class="columns is-mobile is-vcentered">
             <div class="column">
                 <h5 class="title is-5">Transactions</h5>
             </div>
@@ -11,18 +11,20 @@
                 </button>
             </div>
       </div>
-      <div class="columns bd-b-1 is-mobile is-vcentered"
-        v-for="trans in transactions"
-        :key="trans._id">
-          <div class="column has-text-grey-light has-text-weight-medium has-text-left is-one-fifth">
-              <p>{{ trans.timestamp | MMMFromX }}</p>
-              <p>{{ trans.timestamp | DDFromX }}</p>
+      <div class="transaction-container"
+        v-for="(groupBy, date) in transactions"
+        :key="date">
+        <div class="columns bd-b-1 has-text-grey-light">
+          <div class="column is-size-6">{{ date | weekDayDayMonth }}</div>
+        </div>
+        <div class="columns bd-b-l-1 is-mobile is-vcentered" v-for="trans in groupBy"
+          :key="trans._id">
+          <div class="column has-text-left is-three-quarters">
+            <p>{{ trans.category.title }}</p>
+            <p class="has-text-grey-light is-size-6">{{ trans.description }}</p>
           </div>
-          <div class="column has-text-left">
-              <p>{{ trans.category.title }}</p>
-              <p class="has-text-grey-light is-size-6">{{ trans.description }}</p>
-          </div>
-          <div class="column has-text-right">${{trans.amount}}</div>
+          <div class="column has-text-right">${{trans.amount | to2Decimal }}</div>
+        </div>
       </div>
   </div>
 </template>
@@ -32,12 +34,7 @@ import 'vue-awesome/icons/plus-circle';
 
 export default {
   name: 'MtdTransaction',
-  props: {
-    transactions: {
-      type: Array,
-      default: () => [],
-    },
-  },
+  props: ['transactions'],
   methods: {
     rediectToForm() {
       this.$router.push('/transaction/new');
@@ -45,3 +42,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .transaction-container {
+    margin-bottom: 1em;
+  }
+</style>
