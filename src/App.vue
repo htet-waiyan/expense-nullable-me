@@ -8,16 +8,19 @@
         </div>
       </div>
     </div>
+    <footer-nav v-if="showNav" />
   </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue';
+import FooterNav from './components/FooterNav.vue';
 
 export default {
   name: 'App',
   components: {
     Navbar,
+    FooterNav,
   },
   computed: {
     showNav() {
@@ -29,17 +32,29 @@ export default {
 </script>
 
 <style>
+  html,body {
+    height: 100%;
+  }
   .input-error {
     border: 2px solid #ddd;
-  }
-  .mt-2 {
-    margin-top: 2em;
   }
   .bd-b-1 {
     border-bottom: 1px solid #ddd;
   }
   .mt-2 {
     margin-top: 2em;
+  }
+  .mb-2 {
+    margin-bottom: 2em;
+  }
+  .mb-3 {
+    margin-bottom: 3em;
+  }
+  .mb-5 {
+    margin-bottom: 5em;
+  }
+  .mb-7 {
+    margin-bottom: 7em;
   }
   .bd-b-l-1:last-of-type {
     border-bottom: 1px solid #ddd;

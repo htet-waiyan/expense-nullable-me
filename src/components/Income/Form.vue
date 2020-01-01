@@ -24,7 +24,7 @@
                     Invalid amount</p>
             </div>
         </div>
-        <div class="field mt-2 is-grouped">
+        <div class="field mt-2 mb-2 is-grouped">
             <div class="control is-expanded">
               <button class="button is-dark is-fullwidth"
                 :disabled="!isValidForm"

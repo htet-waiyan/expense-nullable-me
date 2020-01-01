@@ -67,7 +67,7 @@
                   v-model="description"></textarea>
             </div>
         </div>
-        <div class="field is-grouped">
+        <div class="field mb-7 is-grouped">
             <div class="control is-expanded">
               <button class="button is-dark is-fullwidth"
                 :disabled="hasFormError"
