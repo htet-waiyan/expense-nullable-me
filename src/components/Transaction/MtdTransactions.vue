@@ -44,7 +44,10 @@ export default {
 </script>
 
 <style scoped>
+  .transaction-list {
+    margin-bottom: 10em;
+  }
   .transaction-container {
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
   }
 </style>

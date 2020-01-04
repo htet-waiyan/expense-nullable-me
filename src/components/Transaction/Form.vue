@@ -82,6 +82,7 @@
 /* eslint no-underscore-dangle: 0 */
 import 'vue-awesome/icons/plus';
 import 'vue-awesome/icons/calendar-plus';
+import moment from 'moment';
 import { createNamespacedHelpers } from 'vuex';
 import CategoryForm from './CategoryForm.vue';
 import TagCloud from '../TagCloud.vue';
@@ -147,11 +148,13 @@ export default {
         amount: this.amount,
         category: this.category,
         description: this.description,
+        timestamp: moment(this.selectedDate).unix(),
       };
 
       return http.post('/expense', payload)
         .then(() => {
           // TODO: redirect to MTD list
+          this.toast('Expense recorded');
           this.goBackToMtdList();
         });
     },
@@ -164,7 +167,7 @@ export default {
 
 <style>
   .form-error-text {
-    font-size: 13px;
+    font-size: 12px;
     font-style: italic;
   }
 </style>

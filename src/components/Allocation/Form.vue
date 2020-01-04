@@ -1,5 +1,5 @@
 <template>
-    <div class="planning-form-container">
+    <div class="planning-form-container mb-7">
         <!-- <form-button></form-button> -->
         <div class="columns bd-b-1 is-vcentered is-mobile">
             <div class="column is-two-thirds has-text-left
@@ -10,10 +10,10 @@
                 S${{ totalIncome }}
             </div>
         </div>
-        <!-- <div class="field">
-            <p v-if="!isValidSaving" :class="{'help is-danger': !isValidSaving}">
-                Invalid saving amount</p>
-        </div> -->
+        <div class="field">
+            <p v-if="!isValidAllocation" :class="{'help is-danger': !isValidSaving}">
+                You are allocating more than total income</p>
+        </div>
         <div class="field">
             <label for="saving" class="label">Save</label>
             <div class="control">
@@ -75,10 +75,10 @@ export default {
       return +this.expense > 0;
     },
     isValidAllocation() {
-      return (this.saving || 0) + (this.expense || 0) <= this.income;
+      return (+this.saving || 0) + (+this.expense || 0) <= this.totalIncome;
     },
     isValidForm() {
-      return this.isValidSaving && this.isValidExpense;
+      return this.isValidSaving && this.isValidExpense && this.isValidAllocation;
     },
   },
   methods: {
@@ -87,7 +87,11 @@ export default {
         savingAmount: this.saving,
         expenseAmount: this.expense,
       };
-      http.post('/allocation', payload);
+      http.post('/allocation', payload)
+        .then(() => {
+          this.toast('Successfully allocated income');
+          this.$router.push('/allocation');
+        });
     },
   },
 };
