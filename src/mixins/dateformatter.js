@@ -11,5 +11,8 @@ export default {
     weekDayDayMonth(value) {
       return moment(value, 'YYYYMMDD').format('dddd, DD MMM YYYY');
     },
+    MMMYYYYFromNum(value) {
+      return moment(value, 'YYYYMM').format('MMM YYYY');
+    },
   },
 };

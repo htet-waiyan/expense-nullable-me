@@ -9,6 +9,8 @@ import AllocationList from '../views/Allocation/List.vue';
 import Income from '../views/Income/Index.vue';
 import IncomeNew from '../views/Income/New.vue';
 import IndexPage from '../views/Login/Index.vue';
+import ProfileIndex from '../views/Profile/Index.vue';
+import ProfileSetting from '../views/Profile/Setting.vue';
 
 Vue.use(VueRouter);
 
@@ -69,6 +71,20 @@ const routes = [
         path: 'new',
         name: 'IncomeNew',
         component: IncomeNew,
+        props: { showNav: true },
+      },
+    ],
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfileIndex,
+    props: { showNav: true },
+    children: [
+      {
+        path: '',
+        name: 'ProfileSettingPage',
+        component: ProfileSetting,
         props: { showNav: true },
       },
     ],

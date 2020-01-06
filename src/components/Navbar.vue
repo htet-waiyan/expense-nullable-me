@@ -10,7 +10,8 @@
         Transaction
       </div>
       <div class="column is-one-fifth has-text-right">
-        <button class="button is-white">
+        <button class="button is-white"
+          @click="goToProfile()">
           <v-icon name="user"/>
         </button>
       </div>
@@ -26,6 +27,9 @@ export default {
   methods: {
     back() {
       this.$router.go(-1);
+    },
+    goToProfile() {
+      this.$router.push('/profile');
     },
   },
 };

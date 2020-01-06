@@ -14,7 +14,10 @@
       <div class="transaction-container"
         v-for="(groupBy, date) in transactions"
         :key="date">
-        <div class="columns bd-b-1 has-text-grey-light">
+        <div class="columns bd-b-1 has-text-grey-light" v-if="isToday(date)">
+          <div class="column is-size-6">Today</div>
+        </div>
+        <div class="columns bd-b-1 has-text-grey-light" v-else>
           <div class="column is-size-6">{{ date | weekDayDayMonth }}</div>
         </div>
         <div class="columns bd-b-l-1 is-mobile is-vcentered" v-for="trans in groupBy"
@@ -31,6 +34,7 @@
 
 <script>
 import 'vue-awesome/icons/plus-circle';
+import moment from 'moment';
 
 export default {
   name: 'MtdTransaction',
@@ -38,6 +42,9 @@ export default {
   methods: {
     rediectToForm() {
       this.$router.push('/transaction/new');
+    },
+    isToday(value) {
+      return +value === +moment().format('YYYYMMDD');
     },
   },
 };

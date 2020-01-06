@@ -2,6 +2,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import transaction from './transaction';
+import profile from './profile';
 
 Vue.use(Vuex);
 
@@ -40,5 +41,6 @@ export default new Vuex.Store({
   getters,
   modules: {
     transaction,
+    profile,
   },
 });
