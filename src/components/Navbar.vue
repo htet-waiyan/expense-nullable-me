@@ -1,15 +1,15 @@
 <template>
-    <div class="columns is-mobile is-vcentered">
-      <div class="column is-one-fifth">
+    <div class="columns is-mobile spllit-navbar is-vcentered">
+      <div class="column is-gapless is-one-fifth">
         <button class="button is-white"
           @click="back">
           <v-icon name="chevron-left" />
         </button>
       </div>
-      <div class="column has-text-centered">
+      <div class="column is-gapless has-text-centered">
         Transaction
       </div>
-      <div class="column is-one-fifth has-text-right">
+      <div class="column is-gapless is-one-fifth has-text-right">
         <button class="button is-white"
           @click="goToProfile()">
           <v-icon name="user"/>
@@ -34,3 +34,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .spllit-navbar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    left: 0;
+    z-index: 1030;
+    background-color: #fff;
+  }
+</style>

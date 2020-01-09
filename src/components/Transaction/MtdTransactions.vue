@@ -11,22 +11,48 @@
                 </button>
             </div>
       </div>
-      <div class="transaction-container"
-        v-for="(groupBy, date) in transactions"
-        :key="date">
-        <div class="columns bd-b-1 has-text-grey-light" v-if="isToday(date)">
-          <div class="column is-size-6">Today</div>
-        </div>
-        <div class="columns bd-b-1 has-text-grey-light" v-else>
-          <div class="column is-size-6">{{ date | weekDayDayMonth }}</div>
-        </div>
-        <div class="columns bd-b-l-1 is-mobile is-vcentered" v-for="trans in groupBy"
-          :key="trans._id">
-          <div class="column has-text-left is-three-quarters">
-            <p>{{ trans.category.title }}</p>
-            <p class="has-text-grey-light is-size-6">{{ trans.description }}</p>
+      <div class="columns is-mobile is-vcentered">
+        <div class="column">
+          <div class="tabs is-toggle is-small">
+            <ul>
+              <li :class="{'is-active': viewMode === 1}"
+                @click="toggleView(1)">
+                <a>
+                  <span class="icon is-small">
+                    <v-icon name="calendar-week" aria-hidden="true"></v-icon>
+                  </span>
+                  <span>Date</span>
+                </a>
+              </li>
+              <li :class="{'is-active': viewMode === 2}"
+                @click="toggleView(2)">
+                <a>
+                  <span class="icon is-small">
+                    <v-icon name="folder" aria-hidden="true"></v-icon>
+                  </span>
+                  <span>Category</span>
+                </a>
+              </li>
+              <li :class="{'is-active': viewMode === 3}"
+                @click="toggleView(3)">
+                <a>
+                  <span class="icon is-small">
+                    <v-icon name="chart-pie" aria-hidden="true"></v-icon>
+                  </span>
+                  <span>Chart</span>
+                </a>
+              </li>
+            </ul>
           </div>
-          <div class="column has-text-right">${{trans.amount | to2Decimal }}</div>
+        </div>
+      </div>
+      <transaction-date :transactions="transactions"/>
+      <div class="columns transaction-summary is-mobile is-vecentered">
+        <div class="column has-text-weight-semibold">
+          Total
+        </div>
+        <div class="column is-one-fifth has-text-right has-text-weight-semibold">
+          ${{ totalSpend | to2Decimal }}
         </div>
       </div>
   </div>
@@ -34,17 +60,29 @@
 
 <script>
 import 'vue-awesome/icons/plus-circle';
-import moment from 'moment';
+import 'vue-awesome/icons/calendar-week';
+import 'vue-awesome/icons/folder';
+import 'vue-awesome/icons/chart-pie';
+import TransactionDate from './MtdTransactionDate.vue';
 
 export default {
   name: 'MtdTransaction',
-  props: ['transactions'],
+  props: ['transactions', 'totalSpend'],
+  components: {
+    TransactionDate,
+  },
+  data() {
+    return {
+      viewMode: 1,
+    };
+  },
   methods: {
     rediectToForm() {
       this.$router.push('/transaction/new');
     },
-    isToday(value) {
-      return +value === +moment().format('YYYYMMDD');
+    toggleView(mode = 1) {
+      this.viewMode = mode;
+      this.$emit('toggleView', this.viewMode);
     },
   },
 };
@@ -54,7 +92,8 @@ export default {
   .transaction-list {
     margin-bottom: 10em;
   }
-  .transaction-container {
-    margin-bottom: 0.5em;
+  li.is-active a{
+    background-color: #363636 !important;
+    border-color:#363636 !important;
   }
 </style>

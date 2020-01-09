@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar v-if="showNav"/>
-    <div>
+    <div class="all-main-content">
       <div class="columns is-centered">
         <div class="column is-half">
           <router-view/>
@@ -58,5 +58,9 @@ export default {
   }
   .bd-b-l-1:last-of-type {
     border-bottom: 1px solid #ddd;
+  }
+
+  .all-main-content {
+    margin-top: 5em;
   }
 </style>

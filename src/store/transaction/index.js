@@ -5,6 +5,7 @@ import {
   SET_MTD_EXPENSE_TOTAL,
   SET_SAVING,
   SET_MTD_TRANSACTIONS,
+  SET_EXPENSE,
 } from './type.mutation';
 
 import { http } from '../../http';
@@ -16,6 +17,7 @@ const state = {
   all: [],
   expenseTotal: 0,
   saving: 0,
+  expense: 0,
   transactions: [],
 };
 
@@ -34,6 +36,9 @@ const mutations = {
   },
   [SET_MTD_TRANSACTIONS](_state, payload = []) {
     _state.transactions = payload;
+  },
+  [SET_EXPENSE](_state, payload) {
+    _state.expense = payload;
   },
 };
 
@@ -76,7 +81,8 @@ const actions = {
         dispatch('setRequestLoading', false, { root: true });
         commit(SET_MTD_TRANSACTIONS, response.data.data.transactions);
         commit(SET_SAVING, response.data.data.saving);
-        commit(SET_MTD_EXPENSE_TOTAL, response.data.data.expense);
+        commit(SET_MTD_EXPENSE_TOTAL, response.data.data.totalSpend);
+        commit(SET_EXPENSE, response.data.data.expense);
       })
       .catch((error) => {
         if (!error.status || error.status === 500) {
@@ -93,6 +99,7 @@ const getters = {
   expenseTotal: _state => _state.expenseTotal,
   saving: _state => _state.saving,
   transactions: _state => _state.transactions,
+  expense: _state => _state.expense,
 };
 
 export default {

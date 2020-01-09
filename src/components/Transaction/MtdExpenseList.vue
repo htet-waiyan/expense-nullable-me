@@ -5,13 +5,15 @@
       <mtd-summary
         :month="statementMonth"
         :saving="saving"
-        :expense="expenseTotal"/>
+        :totalSpend="expenseTotal"
+        :expense="expense"/>
     </div>
   </div>
   <div class="columns">
     <div class="column">
       <mtd-transactions
-        :transactions="transactions"/>
+        :transactions="transactions"
+        :totalSpend="expenseTotal"/>
     </div>
   </div>
   </div>
@@ -37,7 +39,7 @@ export default {
     MtdTransactions,
   },
   computed: {
-    ...mapGetters(['expenseTotal', 'saving', 'transactions']),
+    ...mapGetters(['expenseTotal', 'saving', 'transactions', 'expense']),
     statementMonth() {
       const rawMonth = new Date().getMonth();
       return this.monthMapping[rawMonth];
