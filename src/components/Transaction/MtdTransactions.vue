@@ -15,8 +15,8 @@
         <div class="column">
           <div class="tabs is-toggle is-small">
             <ul>
-              <li :class="{'is-active': viewMode === 1}"
-                @click="toggleView(1)">
+              <li :class="{'is-active': viewMode === 'DATE'}"
+                @click="toggleView('DATE')">
                 <a>
                   <span class="icon is-small">
                     <v-icon name="calendar-week" aria-hidden="true"></v-icon>
@@ -24,8 +24,8 @@
                   <span>Date</span>
                 </a>
               </li>
-              <li :class="{'is-active': viewMode === 2}"
-                @click="toggleView(2)">
+              <li :class="{'is-active': viewMode === 'CATEGORY'}"
+                @click="toggleView('CATEGORY')">
                 <a>
                   <span class="icon is-small">
                     <v-icon name="folder" aria-hidden="true"></v-icon>
@@ -33,7 +33,7 @@
                   <span>Category</span>
                 </a>
               </li>
-              <li :class="{'is-active': viewMode === 3}"
+              <!-- <li :class="{'is-active': viewMode === 3}"
                 @click="toggleView(3)">
                 <a>
                   <span class="icon is-small">
@@ -41,12 +41,17 @@
                   </span>
                   <span>Chart</span>
                 </a>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
       </div>
-      <transaction-date :transactions="transactions"/>
+      <div v-if="viewMode === 'DATE'">
+        <transaction-date :transactions="transactions"/>
+      </div>
+      <div v-if="viewMode === 'CATEGORY'">
+        <transaction-category :transactions="transactions" />
+      </div>
       <div class="columns transaction-summary is-mobile is-vecentered">
         <div class="column has-text-weight-semibold">
           Total
@@ -64,23 +69,25 @@ import 'vue-awesome/icons/calendar-week';
 import 'vue-awesome/icons/folder';
 import 'vue-awesome/icons/chart-pie';
 import TransactionDate from './MtdTransactionDate.vue';
+import TransactionCategory from './MtdTransactionCategory.vue';
 
 export default {
   name: 'MtdTransaction',
   props: ['transactions', 'totalSpend'],
   components: {
     TransactionDate,
+    TransactionCategory,
   },
   data() {
     return {
-      viewMode: 1,
+      viewMode: 'DATE',
     };
   },
   methods: {
     rediectToForm() {
       this.$router.push('/transaction/new');
     },
-    toggleView(mode = 1) {
+    toggleView(mode = 'DATE') {
       this.viewMode = mode;
       this.$emit('toggleView', this.viewMode);
     },

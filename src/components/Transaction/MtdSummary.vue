@@ -1,10 +1,21 @@
 <template>
     <div class="has-background-grey-darker mtd-container is-fluid container">
-        <div class="columns">
+        <div class="columns is-mobile is-vcentered">
           <div class="column">
             <h3 class="title is-5 has-text-white">
               {{ month }} Overview
+              <span class="month-select"
+                @click="toggleMonthSelection">
+                <v-icon name="calendar" />
+              </span>
             </h3>
+          </div>
+        </div>
+        <div class="columns is-mobile" v-if="showMonthSelection">
+          <div class="column">
+            <calendar-month
+              @select-month="onSelectMonth"
+              :selectedYear="selectedYear"/>
           </div>
         </div>
         <div class="columns is-mobile">
@@ -23,8 +34,14 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/calendar';
+import CalendarMonth from '../CalendarMonth.vue';
+
 export default {
   name: 'MtdExpenseSummary',
+  components: {
+    CalendarMonth,
+  },
   props: {
     month: {
       type: String,
@@ -46,5 +63,30 @@ export default {
       default: () => [],
     },
   },
+  data() {
+    return {
+      showMonthSelection: false,
+      selectedYear: new Date().getFullYear(),
+    };
+  },
+  methods: {
+    toggleMonthSelection() {
+      this.showMonthSelection = !this.showMonthSelection;
+    },
+    onSelectMonth(yyyyMM) {
+      this.selectedYear = +yyyyMM.substring(0, 4);
+      this.showMonthSelection = false;
+      this.$emit('select-month', yyyyMM);
+    },
+  },
 };
 </script>
+
+<style scoped>
+  .month-select {
+    margin-left: 5px;
+  }
+  .month-select:hover {
+    cursor: pointer;
+  }
+</style>

@@ -6,9 +6,11 @@ import {
   SET_SAVING,
   SET_MTD_TRANSACTIONS,
   SET_EXPENSE,
+  RESET_MTD_TRANSACTIONS,
 } from './type.mutation';
 
 import { http } from '../../http';
+import { constructParam } from '../../helper';
 
 const CATEGORY_URL = '/category';
 const EXPENSE_URL = '/expense';
@@ -18,7 +20,7 @@ const state = {
   expenseTotal: 0,
   saving: 0,
   expense: 0,
-  transactions: [],
+  transactions: {},
 };
 
 const mutations = {
@@ -39,6 +41,9 @@ const mutations = {
   },
   [SET_EXPENSE](_state, payload) {
     _state.expense = payload;
+  },
+  [RESET_MTD_TRANSACTIONS](_state, payload) {
+    _state.transactions = payload;
   },
 };
 
@@ -74,9 +79,11 @@ const actions = {
         return error;
       });
   },
-  fetchMtdTransactions({ commit, dispatch }) {
+  fetchMtdTransactions({ commit, dispatch }, params = {}) {
+    commit(RESET_MTD_TRANSACTIONS, {});
     dispatch('setRequestLoading', true, { root: true });
-    return http.get(`${EXPENSE_URL}/mtd`)
+    const url = constructParam(`${EXPENSE_URL}/mtd`, params);
+    return http.get(url)
       .then((response) => {
         dispatch('setRequestLoading', false, { root: true });
         commit(SET_MTD_TRANSACTIONS, response.data.data.transactions);
