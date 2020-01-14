@@ -7,6 +7,7 @@ import {
   SET_MTD_TRANSACTIONS,
   SET_EXPENSE,
   RESET_MTD_TRANSACTIONS,
+  SET_DATA_READY,
 } from './type.mutation';
 
 import { http } from '../../http';
@@ -21,6 +22,7 @@ const state = {
   saving: 0,
   expense: 0,
   transactions: {},
+  dataReady: false,
 };
 
 const mutations = {
@@ -44,6 +46,9 @@ const mutations = {
   },
   [RESET_MTD_TRANSACTIONS](_state, payload) {
     _state.transactions = payload;
+  },
+  [SET_DATA_READY](_state, payload) {
+    _state.dataReady = payload;
   },
 };
 
@@ -81,6 +86,7 @@ const actions = {
   },
   fetchMtdTransactions({ commit, dispatch }, params = {}) {
     commit(RESET_MTD_TRANSACTIONS, {});
+    commit(SET_DATA_READY, false);
     dispatch('setRequestLoading', true, { root: true });
     const url = constructParam(`${EXPENSE_URL}/mtd`, params);
     return http.get(url)
@@ -90,6 +96,7 @@ const actions = {
         commit(SET_SAVING, response.data.data.saving);
         commit(SET_MTD_EXPENSE_TOTAL, response.data.data.totalSpend);
         commit(SET_EXPENSE, response.data.data.expense);
+        commit(SET_DATA_READY, true);
       })
       .catch((error) => {
         if (!error.status || error.status === 500) {
@@ -107,6 +114,7 @@ const getters = {
   saving: _state => _state.saving,
   transactions: _state => _state.transactions,
   expense: _state => _state.expense,
+  dataReady: _state => _state.dataReady,
 };
 
 export default {

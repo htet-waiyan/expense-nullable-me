@@ -33,15 +33,15 @@
                   <span>Category</span>
                 </a>
               </li>
-              <!-- <li :class="{'is-active': viewMode === 3}"
-                @click="toggleView(3)">
+              <li :class="{'is-active': viewMode === 'CHART'}"
+                @click="toggleView('CHART')">
                 <a>
                   <span class="icon is-small">
                     <v-icon name="chart-pie" aria-hidden="true"></v-icon>
                   </span>
                   <span>Chart</span>
                 </a>
-              </li> -->
+              </li>
             </ul>
           </div>
         </div>
@@ -51,6 +51,10 @@
       </div>
       <div v-if="viewMode === 'CATEGORY'">
         <transaction-category :transactions="transactions" />
+      </div>
+      <!-- set the dataReady because canvas can be drawn before the data is ready -->
+      <div v-if="viewMode === 'CHART' && dataReady">
+        <transaction-chart :transactions="transactions" />
       </div>
       <div class="columns transaction-summary is-mobile is-vecentered">
         <div class="column has-text-weight-semibold">
@@ -68,8 +72,12 @@ import 'vue-awesome/icons/plus-circle';
 import 'vue-awesome/icons/calendar-week';
 import 'vue-awesome/icons/folder';
 import 'vue-awesome/icons/chart-pie';
+import { createNamespacedHelpers } from 'vuex';
 import TransactionDate from './MtdTransactionDate.vue';
 import TransactionCategory from './MtdTransactionCategory.vue';
+import TransactionChart from './MtdTransactionChart.vue';
+
+const { mapGetters } = createNamespacedHelpers('transaction');
 
 export default {
   name: 'MtdTransaction',
@@ -77,6 +85,10 @@ export default {
   components: {
     TransactionDate,
     TransactionCategory,
+    TransactionChart,
+  },
+  computed: {
+    ...mapGetters(['dataReady']),
   },
   data() {
     return {
