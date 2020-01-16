@@ -72,7 +72,6 @@ export default {
   },
   created() {
     this.fetchMtdTransactions();
-    this.fetchAllCategories();
   },
 };
 </script>

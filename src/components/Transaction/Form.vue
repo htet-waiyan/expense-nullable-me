@@ -88,7 +88,7 @@ import CategoryForm from './CategoryForm.vue';
 import TagCloud from '../TagCloud.vue';
 import { http } from '../../http';
 
-const { mapGetters } = createNamespacedHelpers('transaction');
+const { mapGetters, mapActions } = createNamespacedHelpers('transaction');
 
 export default {
   name: 'TransactionForm',
@@ -124,6 +124,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['fetchAllCategories']),
     goToCategoryForm() {
       this.showCategoryForm = true;
     },
@@ -161,6 +162,9 @@ export default {
     goBackToMtdList() {
       this.$router.push('/transaction');
     },
+  },
+  created() {
+    this.fetchAllCategories();
   },
 };
 </script>

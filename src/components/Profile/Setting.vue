@@ -11,7 +11,8 @@
             Base Currency
         </div>
         <div class="column has-text-right">
-            <router-link :to="{ name: '' }">
+            <router-link :to="{ name: '' }"
+              class="has-text-grey">
               {{ currencies[profile.baseCurrency].code }}
             </router-link>
         </div>
@@ -20,8 +21,9 @@
         <div class="column save has-text-weight-bold">
             Total Income
         </div>
-        <div class="column has-text-right">
-            <router-link :to="{ name: '' }">
+        <div class="column has-text-right has-text-grey-light">
+            <router-link to="/income"
+              class="has-text-grey">
               {{ currencies[profile.baseCurrency].symbol }}{{ totalIncome }}
             </router-link>
         </div>
@@ -50,15 +52,11 @@ export default {
     ...mapActions(['fetchProfile', 'fetchTotalIncome']),
   },
   created() {
-    if (Object.keys(this.profile).length === 0) {
-      this.fetchProfile()
-        .then(() => {
-          this.profileFetchReady = true;
-        });
-    }
-    if (this.totalIncome < 0) {
-      this.fetchTotalIncome();
-    }
+    this.fetchProfile()
+      .then(() => {
+        this.profileFetchReady = true;
+      });
+    this.fetchTotalIncome();
   },
 };
 </script>

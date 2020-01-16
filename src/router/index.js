@@ -8,6 +8,7 @@ import AllocationNew from '../views/Allocation/New.vue';
 import AllocationList from '../views/Allocation/List.vue';
 import Income from '../views/Income/Index.vue';
 import IncomeNew from '../views/Income/New.vue';
+import IncomeList from '../views/Income/List.vue';
 import IndexPage from '../views/Login/Index.vue';
 import ProfileIndex from '../views/Profile/Index.vue';
 import ProfileSetting from '../views/Profile/Setting.vue';
@@ -67,6 +68,12 @@ const routes = [
     component: Income,
     props: { showNav: true },
     children: [
+      {
+        path: '',
+        name: 'IncomePage',
+        component: IncomeList,
+        props: { showNav: true },
+      },
       {
         path: 'new',
         name: 'IncomeNew',

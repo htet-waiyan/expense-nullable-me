@@ -61,7 +61,8 @@ export default {
       };
       http.post('/income', payload)
         .then(() => {
-          // TODO: redirect to profile
+          this.toast('New income recorded');
+          this.$router.push('/profile');
         });
     },
   },
