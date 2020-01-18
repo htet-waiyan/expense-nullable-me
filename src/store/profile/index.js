@@ -12,6 +12,7 @@ const state = {
   profile: {},
   totalIncome: -1,
   baseCurrency: '',
+  currencyCode: 'S$',
   incomes: [],
 };
 

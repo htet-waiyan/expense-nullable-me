@@ -42,7 +42,7 @@
             <div class="control is-expanded">
               <button class="button is-dark is-fullwidth"
                 :disabled="!isValidForm"
-                @click="allocate">Submit</button>
+                @click="handleAllocation">Submit</button>
             </div>
         </div>
     </div>
@@ -50,7 +50,9 @@
 
 <script>
 import moment from 'moment';
-import { http } from '../../http';
+import { createNamespacedHelpers } from 'vuex';
+
+const { mapGetters, mapActions } = createNamespacedHelpers('allocation');
 
 export default {
   name: 'PlanningForm',
@@ -65,9 +67,11 @@ export default {
       saving: '',
       expense: '',
       selectedMonth: +moment().format('YYYYMM'),
+      formDataForEdit: {},
     };
   },
   computed: {
+    ...mapGetters(['selectedAllocation']),
     isValidSaving() {
       return +this.saving > 0;
     },
@@ -80,19 +84,48 @@ export default {
     isValidForm() {
       return this.isValidSaving && this.isValidExpense && this.isValidAllocation;
     },
+    isUpdating() {
+      return this.$route.query.action === 'edit';
+    },
   },
   methods: {
-    allocate() {
+    ...mapActions(['allocate', 'updateAllocation']),
+    handleAllocation() {
+      if (this.isUpdating) {
+        return this.update();
+      }
+      return this.save();
+    },
+    save() {
       const payload = {
         savingAmount: this.saving,
         expenseAmount: this.expense,
       };
-      http.post('/allocation', payload)
+      this.allocation(payload)
         .then(() => {
           this.toast('Successfully allocated income');
           this.$router.push('/allocation');
         });
     },
+    update() {
+      this.formDataForEdit.savingAmount = +this.saving;
+      this.formDataForEdit.expenseAmount = +this.expense;
+      this.updateAllocation(this.formDataForEdit)
+        .then(() => {
+          this.toast('Successfully updated allocation');
+          this.$router.push('/allocation');
+        });
+    },
+  },
+  created() {
+    if (this.$route.query.action === 'edit') {
+      this.formDataForEdit = { ...this.selectedAllocation };
+      this.saving = this.formDataForEdit.savingAmount;
+      this.expense = this.formDataForEdit.expenseAmount;
+    }
+    if (this.$route.query.action === 'edit' && Object.keys(this.selectedAllocation).length === 0) {
+      this.$router.push('/allocation');
+    }
   },
 };
 </script>

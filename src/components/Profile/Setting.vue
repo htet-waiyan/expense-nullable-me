@@ -46,7 +46,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['profile', 'totalIncome']),
+    ...mapGetters(['profile', 'totalIncome', 'baseCurrency']),
   },
   methods: {
     ...mapActions(['fetchProfile', 'fetchTotalIncome']),

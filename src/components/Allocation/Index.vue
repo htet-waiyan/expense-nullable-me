@@ -18,7 +18,8 @@
         <span class="has-text-grey-light">
           {{ period | MMMYYYYFromNum }}
         </span>
-        <div class="columns is-mobile">
+        <div class="columns is-mobile allocation"
+          @click="onSelectAllocation(periodMaps[period])">
           <div class="column is-one-quarter">
             <div class="save has-text-weight-bold">Save</div>
             <div class="expense has-text-weight-bold">Expense</div>
@@ -40,6 +41,7 @@
 
 <script>
 import 'vue-awesome/icons/search';
+import moment from 'moment';
 import { http } from '../../http';
 
 export default {
@@ -66,6 +68,11 @@ export default {
         .then((response) => {
           this.periodMaps = response.data;
         });
+    },
+    onSelectAllocation(allocation) {
+      if (+moment().format('YYYYMM') !== allocation.period) return;
+      this.$store.commit('allocation/SET_ALLOCATION', allocation);
+      this.$router.push('/allocation/new?action=edit');
     },
   },
   created() {

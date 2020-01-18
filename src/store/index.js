@@ -3,12 +3,15 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import transaction from './transaction';
 import profile from './profile';
+import allocation from './allocation';
 
 Vue.use(Vuex);
 
 const state = {
   loading: false,
   networkError: false,
+  baseCurrency: 'SGD',
+  currencyCode: 'S$',
 };
 
 const mutations = {
@@ -17,6 +20,12 @@ const mutations = {
   },
   NETWORK_ERROR(_state, payload) {
     _state.networkError = payload;
+  },
+  SET_BASE_CURRENCY(_state, payload) {
+    _state.baseCurrency = payload;
+  },
+  SET_CURRENCY_CODE(_state, payload) {
+    _state.currencyCode = payload;
   },
 };
 
@@ -42,5 +51,6 @@ export default new Vuex.Store({
   modules: {
     transaction,
     profile,
+    allocation,
   },
 });
