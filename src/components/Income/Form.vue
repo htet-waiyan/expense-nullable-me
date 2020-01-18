@@ -1,5 +1,10 @@
 <template>
     <div class="income-form-container">
+        <div class="notification" v-if="errorMessage">
+        <button class="delete"
+          @click="errorMessage = ''"></button>
+          {{ errorMessage }}
+        </div>
         <div class="field">
             <label for="title" class="label">
                 Title
@@ -35,7 +40,12 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
 import { http } from '../../http';
+
+const { mapGetters } = createNamespacedHelpers('profile');
+
+// TODO: http method to move to vuex action
 
 export default {
   name: 'IncomeForm',
@@ -43,18 +53,28 @@ export default {
     return {
       title: '',
       amount: '',
+      formDataForEdit: {},
+      errorMessage: '',
     };
   },
   computed: {
+    ...mapGetters(['selectedIncome']),
     isValidAmount() {
       return +this.amount > 0;
     },
     isValidForm() {
       return this.title && this.isValidAmount;
     },
+    isUpdating() {
+      return this.$route.query.action === 'edit';
+    },
   },
   methods: {
     recordNewIncome() {
+      if (this.isUpdating) return this.update();
+      return this.save();
+    },
+    save() {
       const payload = {
         title: this.title,
         amount: this.amount,
@@ -62,9 +82,33 @@ export default {
       http.post('/income', payload)
         .then(() => {
           this.toast('New income recorded');
-          this.$router.push('/profile');
+          this.$router.push('/income');
         });
     },
+    update() {
+      this.formDataForEdit.title = this.title;
+      this.formDataForEdit.amount = +this.amount;
+      http.put(`/income/${this.formDataForEdit._id}`, this.formDataForEdit)
+        .then(() => {
+          this.toast('Updated successfully');
+          this.$router.push('/income');
+        })
+        .catch((error) => {
+          if (error.response.data.error.customCode === 2100) {
+            this.errorMessage = 'Expense allocation is more than new total income. Please adjust the expense amount and update the income again.';
+          }
+        });
+    },
+  },
+  created() {
+    if (this.$route.query.action === 'edit') {
+      this.formDataForEdit = { ...this.selectedIncome };
+      this.title = this.formDataForEdit.title;
+      this.amount = this.formDataForEdit.amount;
+    }
+    if (this.$route.query.action === 'edit' && Object.keys(this.selectedIncome).length === 0) {
+      this.$router.push('/income');
+    }
   },
 };
 </script>

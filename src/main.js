@@ -10,6 +10,7 @@ import store from './store';
 import dateFormatter from './mixins/dateformatter';
 import numberFormatter from './mixins/numberFormatter';
 import util from './mixins/util';
+import currency from './mixins/currency';
 import './registerServiceWorker';
 
 Vue.component('v-icon', Icon);
@@ -18,6 +19,7 @@ Vue.use(Toasted);
 Vue.mixin(dateFormatter);
 Vue.mixin(numberFormatter);
 Vue.mixin(util);
+Vue.mixin(currency);
 
 Vue.config.productionTip = false;
 

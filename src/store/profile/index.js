@@ -5,6 +5,7 @@ import {
   SET_TOTAL_INCOME,
   SET_ALL_INCOMES,
   SET_BASE_CURRENCY,
+  SET_SELECTED_INCOME,
 } from './type.mutation';
 
 import { http } from '../../http';
@@ -14,6 +15,7 @@ const state = {
   totalIncome: -1,
   baseCurrency: '',
   currencyCode: 'S$',
+  selectedIncome: {},
   incomes: [],
 };
 
@@ -30,7 +32,12 @@ const mutations = {
   [SET_BASE_CURRENCY](_state, payload) {
     _state.baseCurrency = payload;
   },
+  [SET_SELECTED_INCOME](_state, payload) {
+    _state.selectedIncome = payload;
+  },
 };
+
+// TODO: income should have its own vuex store
 
 const actions = {
   fetchProfile({ commit }) {
@@ -66,6 +73,7 @@ const getters = {
   totalIncome: _state => _state.totalIncome,
   incomes: _state => _state.incomes,
   baseCurrency: _state => _state.baseCurrency,
+  selectedIncome: _state => _state.selectedIncome,
 };
 
 export default {

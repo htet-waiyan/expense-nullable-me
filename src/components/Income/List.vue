@@ -2,7 +2,8 @@
   <div class="income-container"
     v-if="incomes.length > 0">
     <div class="notification" v-if="errorMessage">
-      <button class="delete"></button>
+      <button class="delete"
+        @click="errorMessage = ''"></button>
       {{ errorMessage }}
     </div>
     <div class="columns">
@@ -22,8 +23,9 @@
         <div class="column save has-text-weight-bold">
             {{ income.title }}
         </div>
-        <div class="column has-text-right">
-            {{ income.amount }}
+        <div class="column has-text-right income-amount"
+          @click="onSelectIncome(income)">
+            {{ currencyCode }}{{ income.amount }}
         </div>
         <div class="column is-one-fifth  has-text-right">
           <button class="button is-small is-white"
@@ -37,7 +39,7 @@
         Total Income
       </div>
       <div class="column has-text-right">
-        {{ totalIncome }}
+        {{ currencyCode }}{{ totalIncome }}
       </div>
       <div class="column is-one-fifth">&nbsp;</div>
     </div>
@@ -49,6 +51,8 @@ import 'vue-awesome/icons/trash-alt';
 import { createNamespacedHelpers } from 'vuex';
 
 const { mapActions, mapGetters } = createNamespacedHelpers('profile');
+
+// TODO: calculate totalIncome through incomes data
 
 export default {
   name: 'Incomes',
@@ -69,6 +73,8 @@ export default {
       this.removeIncome(id)
         .then(() => {
           this.toast('Successfully remove income');
+          this.fetchAllIncomes();
+          this.fetchTotalIncome();
         })
         .catch((error) => {
           if (error.response.data.error.customCode === 2100) {
@@ -76,12 +82,14 @@ export default {
           }
         });
     },
+    onSelectIncome(income) {
+      this.$store.commit('profile/SET_SELECTED_INCOME', income);
+      this.$router.push('/income/new?action=edit');
+    },
   },
   created() {
     this.fetchAllIncomes();
-    if (this.totalIncome < 0) {
-      this.fetchTotalIncome();
-    }
+    this.fetchTotalIncome();
   },
 };
 </script>
@@ -89,5 +97,8 @@ export default {
 <style scoped>
   .setting-row {
     border-bottom: 1px solid #ddd;
+  }
+  .income-amount:hover {
+    cursor: pointer;
   }
 </style>
