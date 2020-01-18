@@ -61,7 +61,7 @@
           Total
         </div>
         <div class="column is-one-fifth has-text-right has-text-weight-semibold">
-          ${{ totalSpend | to2Decimal }}
+          {{ currencyCode }}{{ totalSpend | to2Decimal }}
         </div>
       </div>
   </div>

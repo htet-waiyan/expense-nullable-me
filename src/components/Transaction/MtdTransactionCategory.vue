@@ -6,7 +6,7 @@
       <div class="column has-text-left is-three-quarters">
         {{ category }}
       </div>
-      <div class="column has-text-right">${{ amount | to2Decimal }}</div>
+      <div class="column has-text-right">{{ currencyCode }}{{ amount | to2Decimal }}</div>
     </div>
   </div>
 </template>

@@ -24,7 +24,7 @@
         <div class="column has-text-right has-text-grey-light">
             <router-link to="/income"
               class="has-text-grey">
-              {{ currencies[profile.baseCurrency].symbol }}{{ totalIncome }}
+              {{ currencyCode }}{{ totalIncome }}
             </router-link>
         </div>
     </div>

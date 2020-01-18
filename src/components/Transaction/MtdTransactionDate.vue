@@ -15,7 +15,7 @@
             <p>{{ trans.category.title }}</p>
             <p class="has-text-grey-light is-size-6">{{ trans.description }}</p>
           </div>
-          <div class="column has-text-right">${{trans.amount | to2Decimal }}</div>
+          <div class="column has-text-right">{{ currencyCode }}{{trans.amount | to2Decimal }}</div>
         </div>
       </div>
     </div>

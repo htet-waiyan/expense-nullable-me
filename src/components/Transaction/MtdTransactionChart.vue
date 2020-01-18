@@ -12,7 +12,7 @@
           :key="category">
           <div>{{ category }}</div>
           <div class="color-line" :style="{'background-color': tr.category.colorLabel}"></div>
-          <div>${{ tr.amount | to2Decimal }}</div>
+          <div>{{ currencyCode }}{{ tr.amount | to2Decimal }}</div>
         </span>
       </div>
     </div>

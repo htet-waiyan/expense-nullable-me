@@ -25,8 +25,8 @@
             <div class="expense has-text-weight-bold">Expense</div>
           </div>
           <div class="column has-text-right">
-            <div class="save">S${{ periodMaps[period].savingAmount }}</div>
-            <div class="expense">S${{ periodMaps[period].expenseAmount }}</div>
+            <div class="save">{{ currencyCode }}{{ periodMaps[period].savingAmount }}</div>
+            <div class="expense">{{ currencyCode }}{{ periodMaps[period].expenseAmount }}</div>
           </div>
         </div>
       </div>
