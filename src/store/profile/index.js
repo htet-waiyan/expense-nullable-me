@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 import {
   SET_PROFILE,
@@ -53,6 +54,10 @@ const actions = {
         commit(SET_ALL_INCOMES, response.data.data);
         return response.data.data;
       });
+  },
+  removeIncome({ commit }, id) {
+    return http.delete(`/income/${id}`)
+      .then(response => response.data);
   },
 };
 
