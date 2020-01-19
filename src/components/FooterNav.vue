@@ -6,11 +6,11 @@
           <v-icon name="money-check-alt"/>
         </button>
       </div>
-      <div class="column has-text-centered">
+      <!-- <div class="column has-text-centered">
         <button class="button is-white">
           <v-icon name="coins"/>
         </button>
-      </div>
+      </div> -->
       <div class="column has-text-centered">
         <button class="button is-white"
           @click="goTo('/transaction/new')">
@@ -23,11 +23,11 @@
           <v-icon name="wallet"/>
         </button>
       </div>
-      <div class="column has-text-centered">
+      <!-- <div class="column has-text-centered">
         <button class="button is-white">
           <v-icon name="chart-pie"/>
         </button>
-      </div>
+      </div> -->
     </div>
 </template>
 

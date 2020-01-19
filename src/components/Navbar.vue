@@ -2,12 +2,13 @@
     <div class="columns is-mobile spllit-navbar is-vcentered">
       <div class="column is-gapless is-one-fifth">
         <button class="button is-white"
+          v-if="!hideBackButton"
           @click="back">
           <v-icon name="chevron-left" />
         </button>
       </div>
       <div class="column is-gapless has-text-centered">
-        Transaction
+        {{ navTitle }}
       </div>
       <div class="column is-gapless is-one-fifth has-text-right">
         <button class="button is-white"
@@ -24,6 +25,22 @@ import 'vue-awesome/icons/user';
 
 export default {
   name: 'Navbar',
+  computed: {
+    navTitle() {
+      const route = this.$route.matched.find(r => r.name === this.$route.name);
+      if (route) {
+        return route.props.default.label;
+      }
+      return '';
+    },
+    hideBackButton() {
+      const route = this.$route.matched.find(r => r.name === this.$route.name);
+      if (route) {
+        return route.props.default.hideBack;
+      }
+      return true;
+    },
+  },
   methods: {
     back() {
       this.$router.go(-1);

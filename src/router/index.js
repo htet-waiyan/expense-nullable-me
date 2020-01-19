@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Transaction from '../views/Transaction/Index.vue';
@@ -26,19 +27,35 @@ const routes = [
     path: '/transaction',
     name: 'transaction',
     component: Transaction,
-    props: { showNav: true },
+    props: { showNav: true, label: 'Transaction' },
     children: [
       {
         path: '/',
         name: 'TransactionMtd',
         component: TransactionMtd,
-        props: { showNav: true },
+        props: { showNav: true, label: 'Transaction', hideBack: true },
       },
       {
         path: 'new',
         name: 'TransactionNew',
         component: TransactionNew,
-        props: { showNav: true },
+        props: { showNav: true, label: 'Transaction', hideBack: true },
+        beforeEnter(to, from, next) {
+          if (from.name === 'TransactionMtd') {
+            to.matched.forEach((r) => {
+              if (r.name === to.name) {
+                r.props.default.hideBack = false;
+              }
+            });
+          } else {
+            to.matched.forEach((r) => {
+              if (r.name === to.name) {
+                r.props.default.hideBack = true;
+              }
+            });
+          }
+          next();
+        },
       },
     ],
   },
@@ -46,19 +63,19 @@ const routes = [
     path: '/allocation',
     name: 'allocation',
     component: Allocation,
-    props: { showNav: true },
+    props: { showNav: true, label: 'Allocation', hideBack: true },
     children: [
       {
         path: '',
         name: 'AllocationList',
         component: AllocationList,
-        props: { showNav: true },
+        props: { showNav: true, label: 'Allocation', hideBack: true },
       },
       {
         path: 'new',
         name: 'AllocationNew',
         component: AllocationNew,
-        props: { showNav: true },
+        props: { showNav: true, label: 'Allocation' },
       },
     ],
   },
@@ -66,19 +83,19 @@ const routes = [
     path: '/income',
     name: 'income',
     component: Income,
-    props: { showNav: true },
+    props: { showNav: true, label: 'Income' },
     children: [
       {
         path: '',
         name: 'IncomePage',
         component: IncomeList,
-        props: { showNav: true },
+        props: { showNav: true, label: 'Income' },
       },
       {
         path: 'new',
         name: 'IncomeNew',
         component: IncomeNew,
-        props: { showNav: true },
+        props: { showNav: true, label: 'Income' },
       },
     ],
   },
@@ -86,13 +103,13 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: ProfileIndex,
-    props: { showNav: true },
+    props: { showNav: true, label: 'Setting' },
     children: [
       {
         path: '',
         name: 'ProfileSettingPage',
         component: ProfileSetting,
-        props: { showNav: true },
+        props: { showNav: true, label: 'Setting', hideBack: true },
       },
     ],
   },
