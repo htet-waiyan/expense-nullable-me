@@ -47,7 +47,8 @@
         </div>
       </div>
       <div v-if="viewMode === 'DATE'">
-        <transaction-date :transactions="transactions"/>
+        <transaction-date :transactions="transactions"
+          @deleted="onDelete"/>
       </div>
       <div v-if="viewMode === 'CATEGORY'">
         <transaction-category :transactions="transactions" />
@@ -60,7 +61,7 @@
         <div class="column has-text-weight-semibold">
           Total
         </div>
-        <div class="column is-one-fifth has-text-right has-text-weight-semibold">
+        <div class="column has-text-right has-text-weight-semibold">
           {{ currencyCode }}{{ totalSpend | to2Decimal }}
         </div>
       </div>
@@ -102,6 +103,9 @@ export default {
     toggleView(mode = 'DATE') {
       this.viewMode = mode;
       this.$emit('toggleView', this.viewMode);
+    },
+    onDelete(expense) {
+      this.$emit('deleted', expense);
     },
   },
 };

@@ -1,5 +1,6 @@
 <template>
-  <div class="transaction-chart-container">
+  <div class="transaction-chart-container"
+    v-if="hasData">
     <div class="columns is-mobile is-vcentered is-centered">
       <div class="column is-half has-text-left is-three-quarters">
         <pie-chart :chartData="chartData" />
@@ -29,6 +30,9 @@ export default {
     PieChart,
   },
   computed: {
+    hasData() {
+      return Object.keys(this.transactions).length;
+    },
     chartData() {
       return {
         labels: Object.keys(this.transactions),

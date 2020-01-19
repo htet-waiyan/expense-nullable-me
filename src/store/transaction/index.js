@@ -106,6 +106,14 @@ const actions = {
         return error;
       });
   },
+  removeTransaction({ dispatch }, id) {
+    dispatch('setRequestLoading', true, { root: true });
+    return http.delete(`${EXPENSE_URL}/${id}`)
+      .then((response) => {
+        dispatch('setRequestLoading', false, { root: true });
+        return response.data;
+      });
+  },
 };
 
 const getters = {

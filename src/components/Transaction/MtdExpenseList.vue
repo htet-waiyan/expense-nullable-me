@@ -15,7 +15,8 @@
       <mtd-transactions
         :transactions="transactions"
         :totalSpend="expenseTotal"
-        @toggleView="handleToggleView"/>
+        @toggleView="handleToggleView"
+        @deleted="handleDelete"/>
     </div>
   </div>
   </div>
@@ -68,6 +69,9 @@ export default {
       this.from = yyyyMM;
       this.to = yyyyMM;
       this.fetchMtdTransactions({ from: this.from, to: this.to, groupBy: this.mode });
+    },
+    handleDelete() {
+      this.fetchMtdTransactions();
     },
   },
   created() {

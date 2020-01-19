@@ -11,6 +11,12 @@
         </button>
       </div>
     </div>
+    <div class="columns">
+      <div class="column has-text-grey-light is-size-7">
+        Click to edit the allocation.
+        Past allocation are not allowed to modify.
+      </div>
+    </div>
     <div class="columns allocation div is-mobile is-vcentered"
       v-for="(period) in mapSorted"
       :key="period">
