@@ -1,18 +1,11 @@
 <template>
   <div class="form-container">
     <div class="login-form" v-if="isLoginForm">
-      <h3 class="subtitle is-4">Enter email or phone to get OTP</h3>
-      <h4 class="subtitle is-5">e.g +655745675656 or jon@gmail.com</h4>
+      <h3 class="subtitle is-4">Spllit</h3>
+      <h4 class="subtitle is-5">A simple way to track all your expenses at one place.</h4>
       <div class="field">
-          <label for="phoneOrEmail" class="label">Email or Phone</label>
-          <div class="form-control">
-              <input type="number" class="input" id="phoneOrEmail"
-                v-model="phoneOrEmail"/>
-          </div>
-      </div>
-      <div class="field">
-        <button class="button is-black"
-          @click="sendOtp">Send OTP</button>
+        <a href="http://localhost:3001/auth/connect"
+          class="button is-dark is-fullwidth">Login with Google</a>
       </div>
     </div>
     <div class="otp-form" v-if="isOtpForm">

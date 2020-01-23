@@ -13,14 +13,32 @@ import IncomeList from '../views/Income/List.vue';
 import IndexPage from '../views/Login/Index.vue';
 import ProfileIndex from '../views/Profile/Index.vue';
 import ProfileSetting from '../views/Profile/Setting.vue';
+import ConnectSocial from '../views/Connect.vue';
 
 Vue.use(VueRouter);
+
+const protectRoute = (to, from, next) => {
+  const token = localStorage.getItem('auth_token');
+  if (!token) return next('/');
+  return next();
+};
 
 const routes = [
   {
     path: '/',
     name: 'IndexPage',
     component: IndexPage,
+    props: { showNav: false },
+    beforeEnter(to, from, next) {
+      const token = localStorage.getItem('auth_token');
+      if (token) return next('/transaction');
+      return next();
+    },
+  },
+  {
+    path: '/connect',
+    name: 'ConnectSocial',
+    component: ConnectSocial,
     props: { showNav: false },
   },
   {
@@ -34,6 +52,7 @@ const routes = [
         name: 'TransactionMtd',
         component: TransactionMtd,
         props: { showNav: true, label: 'Transaction', hideBack: true },
+        beforeEnter: protectRoute,
       },
       {
         path: 'new',
@@ -54,7 +73,7 @@ const routes = [
               }
             });
           }
-          next();
+          protectRoute(to, from, next);
         },
       },
     ],
@@ -70,12 +89,14 @@ const routes = [
         name: 'AllocationList',
         component: AllocationList,
         props: { showNav: true, label: 'Allocation', hideBack: true },
+        beforeEnter: protectRoute,
       },
       {
         path: 'new',
         name: 'AllocationNew',
         component: AllocationNew,
         props: { showNav: true, label: 'Allocation' },
+        beforeEnter: protectRoute,
       },
     ],
   },
@@ -90,12 +111,14 @@ const routes = [
         name: 'IncomePage',
         component: IncomeList,
         props: { showNav: true, label: 'Income' },
+        beforeEnter: protectRoute,
       },
       {
         path: 'new',
         name: 'IncomeNew',
         component: IncomeNew,
         props: { showNav: true, label: 'Income' },
+        beforeEnter: protectRoute,
       },
     ],
   },
@@ -110,6 +133,7 @@ const routes = [
         name: 'ProfileSettingPage',
         component: ProfileSetting,
         props: { showNav: true, label: 'Setting', hideBack: true },
+        beforeEnter: protectRoute,
       },
     ],
   },

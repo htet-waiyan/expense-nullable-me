@@ -1,7 +1,31 @@
+/* eslint-disable no-param-reassign */
 import axios from 'axios';
+import router from './router';
 
-export const http = axios.create({
+const protectedHttp = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
-  headers: { authorization: `Bearer ${localStorage.getItem('auth_token')}` },
 });
-export const auth = axios.create({ baseURL: process.env.VUE_APP_AS_URL });
+const publicHttp = axios.create({ baseURL: process.env.VUE_APP_AS_URL });
+
+protectedHttp.interceptors.request.use((config) => {
+  config.headers = { authorization: `Bearer ${localStorage.getItem('auth_token')}` };
+  return config;
+}, (error) => {
+  if (error.response.status === 401) {
+    localStorage.removeItem('auth_token');
+    return router.push('/');
+  }
+  return Promise.reject(error);
+});
+
+protectedHttp.interceptors.response.use(response => response,
+  (error) => {
+    if (error.response.status === 401) {
+      localStorage.removeItem('auth_token');
+      return router.push('/');
+    }
+    return Promise.reject(error);
+  });
+
+export const http = protectedHttp;
+export const auth = publicHttp;

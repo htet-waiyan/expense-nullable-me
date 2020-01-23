@@ -99,7 +99,7 @@ const actions = {
         commit(SET_DATA_READY, true);
       })
       .catch((error) => {
-        if (!error.status || error.status === 500) {
+        if (!error.response.status || error.response.status === 500) {
           dispatch('setNetworkError', true, { root: true });
         }
         dispatch('setRequestLoading', false, { root: true });

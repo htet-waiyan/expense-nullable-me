@@ -1,5 +1,7 @@
 <template>
-    <login-form/>
+   <div class="container is-fluid">
+     <login-form/>
+   </div>
 </template>
 
 <script>
