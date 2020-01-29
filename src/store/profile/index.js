@@ -66,6 +66,9 @@ const actions = {
     return http.delete(`/income/${id}`)
       .then(response => response.data);
   },
+  setBaseCurrency({ commit }, base) {
+    commit(SET_BASE_CURRENCY, base);
+  },
 };
 
 const getters = {

@@ -49,6 +49,12 @@ const { mapGetters } = createNamespacedHelpers('profile');
 
 export default {
   name: 'IncomeForm',
+  props: {
+    redirectOnSave: {
+      type: Boolean,
+      default: true,
+    },
+  },
   data() {
     return {
       title: '',
@@ -81,8 +87,11 @@ export default {
       };
       http.post('/income', payload)
         .then(() => {
-          this.toast('New income recorded');
-          this.$router.push('/income');
+          this.$emit('incomeSave', payload);
+          if (this.redirectOnSave) {
+            this.toast('New income recorded');
+            this.$router.push('/income');
+          }
         });
     },
     update() {
@@ -91,7 +100,9 @@ export default {
       http.put(`/income/${this.formDataForEdit._id}`, this.formDataForEdit)
         .then(() => {
           this.toast('Updated successfully');
-          this.$router.push('/income');
+          if (this.redirectOnSave) {
+            this.$router.push('/income');
+          }
         })
         .catch((error) => {
           if (error.response.data.error.customCode === 2100) {

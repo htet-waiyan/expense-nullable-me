@@ -14,13 +14,18 @@ export default Object.freeze({
     11: 'December',
   },
   CURRENCIES: {
+    USD: {
+      symbol: '$',
+      fullName: 'US Dollar',
+      code: 'USD',
+    },
     SGD: {
       symbol: 'S$',
       fullName: 'Singapore Dollar',
       code: 'SGD',
     },
     MMK: {
-      symbol: 'MMK',
+      symbol: 'Kyat',
       fullName: 'Myanmar Kyat',
       code: 'MMK',
     },

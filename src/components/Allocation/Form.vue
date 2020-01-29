@@ -61,6 +61,10 @@ export default {
       type: Number,
       default: 0,
     },
+    redirectOnSave: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -101,10 +105,13 @@ export default {
         savingAmount: this.saving,
         expenseAmount: this.expense,
       };
-      this.allocation(payload)
+      this.allocate(payload)
         .then(() => {
-          this.toast('Successfully allocated income');
-          this.$router.push('/allocation');
+          this.$emit('allocationSave', payload);
+          if (this.redirectOnSave) {
+            this.toast('Successfully allocated income');
+            this.$router.push('/allocation');
+          }
         });
     },
     update() {

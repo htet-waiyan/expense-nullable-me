@@ -22,7 +22,7 @@
             <p class="has-text-grey-light is-size-6">{{ trans.description }}</p>
           </div>
           <div class="column has-text-right">
-            <span>{{ currencyCode }}{{trans.amount | to2Decimal }}</span>
+          <span>{{ currencyCode }}{{trans.amount | to2Decimal }}</span>
             <!-- <span class="tag">
               {{ currencyCode }}{{trans.amount | to2Decimal }}
               <button class="delete is-small"></button>

@@ -11,10 +11,9 @@
             Base Currency
         </div>
         <div class="column has-text-right">
-            <router-link :to="{ name: '' }"
-              class="has-text-grey">
+            <span class="has-text-grey" style="cursor: pointer;">
               {{ currencies[profile.baseCurrency].code }}
-            </router-link>
+            </span>
         </div>
     </div>
     <div class="columns is-mobile is-vcentered setting-row">
@@ -25,6 +24,7 @@
             <router-link to="/income"
               class="has-text-grey">
               {{ currencyCode }}{{ totalIncome }}
+              <v-icon name="chevron-right" scale="0.7"/>
             </router-link>
         </div>
     </div>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/chevron-right';
 import { createNamespacedHelpers } from 'vuex';
 import constant from '../../constant';
 
@@ -49,7 +50,11 @@ export default {
     ...mapGetters(['profile', 'totalIncome', 'baseCurrency']),
   },
   methods: {
-    ...mapActions(['fetchProfile', 'fetchTotalIncome']),
+    ...mapActions(['fetchProfile', 'fetchTotalIncome', 'setBaseCurrency']),
+    selectBaseCurrency(base) {
+      this.setBaseCurrency(base);
+      this.$router.push('/currency');
+    },
   },
   created() {
     this.fetchProfile()

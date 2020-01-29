@@ -14,6 +14,7 @@ import IndexPage from '../views/Login/Index.vue';
 import ProfileIndex from '../views/Profile/Index.vue';
 import ProfileSetting from '../views/Profile/Setting.vue';
 import ConnectSocial from '../views/Connect.vue';
+import CurrencySelectIndex from '../views/Currency/Index.vue';
 
 Vue.use(VueRouter);
 
@@ -136,6 +137,13 @@ const routes = [
         beforeEnter: protectRoute,
       },
     ],
+  },
+  {
+    path: '/currency',
+    name: 'CurrencySelectPage',
+    component: CurrencySelectIndex,
+    props: { showNav: true, label: 'Currency', hideBack: false },
+    beforeEnter: protectRoute,
   },
 ];
 
