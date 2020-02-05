@@ -10,8 +10,6 @@ Vue.use(Vuex);
 const state = {
   loading: false,
   networkError: false,
-  baseCurrency: 'SGD',
-  currencyCode: 'S$',
 };
 
 const mutations = {
@@ -20,12 +18,6 @@ const mutations = {
   },
   NETWORK_ERROR(_state, payload) {
     _state.networkError = payload;
-  },
-  SET_BASE_CURRENCY(_state, payload) {
-    _state.baseCurrency = payload;
-  },
-  SET_CURRENCY_CODE(_state, payload) {
-    _state.currencyCode = payload;
   },
 };
 

@@ -15,6 +15,9 @@ import ProfileIndex from '../views/Profile/Index.vue';
 import ProfileSetting from '../views/Profile/Setting.vue';
 import ConnectSocial from '../views/Connect.vue';
 import CurrencySelectIndex from '../views/Currency/Index.vue';
+import ChartIndexPage from '../views/Chart/Index.vue';
+import ChartMenuListPage from '../views/Chart/Menu.vue';
+import ExpenseGraphIndexPage from '../views/Chart/Expense.vue';
 
 Vue.use(VueRouter);
 
@@ -144,6 +147,27 @@ const routes = [
     component: CurrencySelectIndex,
     props: { showNav: true, label: 'Currency', hideBack: false },
     beforeEnter: protectRoute,
+  },
+  {
+    path: '/chart',
+    name: 'ChartIndexPage',
+    component: ChartIndexPage,
+    props: { showNav: true, label: 'Chart', hideBack: false },
+    beforeEnter: protectRoute,
+    children: [
+      {
+        path: '',
+        name: 'ChartMenuIndexPage',
+        component: ChartMenuListPage,
+        props: { showNav: true, label: 'Chart', hideBack: false },
+      },
+      {
+        path: 'expense',
+        name: 'MonthlyExpenseGraphIndex',
+        component: ExpenseGraphIndexPage,
+        props: { showNav: true, label: 'Chart', hideBack: false },
+      },
+    ],
   },
 ];
 

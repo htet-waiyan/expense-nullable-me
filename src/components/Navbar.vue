@@ -12,8 +12,8 @@
       </div>
       <div class="column is-gapless is-one-fifth has-text-right">
         <button class="button is-white"
-          @click="goToProfile()">
-          <v-icon name="user"/>
+          @click="logout">
+          <v-icon name="sign-out-alt"/>
         </button>
       </div>
     </div>
@@ -47,6 +47,10 @@ export default {
     },
     goToProfile() {
       this.$router.push('/profile');
+    },
+    logout() {
+      localStorage.removeItem('auth_token');
+      this.$router.push('/');
     },
   },
 };

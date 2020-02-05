@@ -20,15 +20,15 @@
         </div>
         <div class="columns is-mobile">
           <div class="column">Saving</div>
-          <div class="column has-text-right"> ${{ saving | to2Decimal }}</div>
+          <div class="column has-text-right"> {{ currencyCode }}{{ saving | to2Decimal }}</div>
         </div>
         <div class="columns is-mobile">
           <div class="column">Expense</div>
-          <div class="column has-text-right"> ${{ expense | to2Decimal }}</div>
+          <div class="column has-text-right"> {{ currencyCode }}{{ expense | to2Decimal }}</div>
         </div>
         <div class="columns is-mobile">
           <div class="column">Total Spent</div>
-          <div class="column has-text-right"> ${{ totalSpend | to2Decimal }}</div>
+          <div class="column has-text-right"> {{ currencyCode }}{{ totalSpend | to2Decimal }}</div>
         </div>
     </div>
 </template>

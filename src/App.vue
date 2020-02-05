@@ -28,6 +28,12 @@ export default {
         || this.$route.matched[0].props.default.showNav;
     },
   },
+  created() {
+    const isAuth = localStorage.getItem('auth_token');
+    if (isAuth) {
+      this.$store.dispatch('profile/fetchProfile');
+    }
+  },
 };
 </script>
 

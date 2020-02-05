@@ -13,6 +13,12 @@
       </div> -->
       <div class="column has-text-centered">
         <button class="button is-white"
+          @click="goTo('/chart')">
+          <v-icon name="chart-pie"/>
+        </button>
+      </div>
+      <div class="column has-text-centered">
+        <button class="button is-white"
           @click="goTo('/transaction/new')">
           <v-icon name="plus"/>
         </button>
@@ -23,11 +29,12 @@
           <v-icon name="wallet"/>
         </button>
       </div>
-      <!-- <div class="column has-text-centered">
-        <button class="button is-white">
-          <v-icon name="chart-pie"/>
+      <div class="column has-text-centered">
+        <button class="button is-white"
+          @click="goTo('/profile')">
+          <v-icon name="user"/>
         </button>
-      </div> -->
+      </div>
     </div>
 </template>
 

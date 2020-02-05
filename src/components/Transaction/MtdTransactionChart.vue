@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import PieChart from './PieChart.vue';
+import PieChart from '../Graph/PieChart.vue';
 
 export default {
   name: 'MtdTransactionChart',

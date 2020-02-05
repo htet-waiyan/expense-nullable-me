@@ -76,6 +76,9 @@ export default {
   },
   created() {
     this.fetchMtdTransactions();
+    if (Object.keys(this.$store.state.profile.profile).length === 0) {
+      this.$store.dispatch('profile/fetchProfile');
+    }
   },
 };
 </script>

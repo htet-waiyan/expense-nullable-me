@@ -6,14 +6,16 @@ import {
   SET_ALL_INCOMES,
   SET_BASE_CURRENCY,
   SET_SELECTED_INCOME,
+  SET_CURRENCY_SYMBOL,
 } from './type.mutation';
 
+import constant from '../../constant';
 import { http } from '../../http';
 
 const state = {
   profile: {},
   totalIncome: -1,
-  baseCurrency: '',
+  baseCurrency: 'SGD',
   currencyCode: 'S$',
   selectedIncome: {},
   incomes: [],
@@ -32,6 +34,9 @@ const mutations = {
   [SET_BASE_CURRENCY](_state, payload) {
     _state.baseCurrency = payload;
   },
+  [SET_CURRENCY_SYMBOL](_state, payload) {
+    _state.currencyCode = payload;
+  },
   [SET_SELECTED_INCOME](_state, payload) {
     _state.selectedIncome = payload;
   },
@@ -40,11 +45,11 @@ const mutations = {
 // TODO: income should have its own vuex store
 
 const actions = {
-  fetchProfile({ commit }) {
+  fetchProfile({ commit, dispatch }) {
     return http.get('/user')
       .then((response) => {
         commit(SET_PROFILE, response.data);
-        commit(SET_BASE_CURRENCY, response.data.baseCurrency);
+        dispatch('setBaseCurrency', response.data.baseCurrency);
         return response.data;
       });
   },
@@ -67,7 +72,9 @@ const actions = {
       .then(response => response.data);
   },
   setBaseCurrency({ commit }, base) {
+    const currency = constant.CURRENCIES[base];
     commit(SET_BASE_CURRENCY, base);
+    commit(SET_CURRENCY_SYMBOL, currency.symbol);
   },
 };
 
