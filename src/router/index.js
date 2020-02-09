@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import Transaction from '../views/Transaction/Index.vue';
 import TransactionNew from '../views/Transaction/New.vue';
 import TransactionMtd from '../views/Transaction/MtdList.vue';
+import TransactionDetail from '../views/Transaction/Detail.vue';
 import Allocation from '../views/Allocation/Index.vue';
 import AllocationNew from '../views/Allocation/New.vue';
 import AllocationList from '../views/Allocation/List.vue';
@@ -56,6 +57,13 @@ const routes = [
         name: 'TransactionMtd',
         component: TransactionMtd,
         props: { showNav: true, label: 'Transaction', hideBack: true },
+        beforeEnter: protectRoute,
+      },
+      {
+        path: '/detail/:id',
+        name: 'TransactionDetailIndex',
+        component: TransactionDetail,
+        props: { showNav: true, label: 'Transaction', hideBack: false },
         beforeEnter: protectRoute,
       },
       {

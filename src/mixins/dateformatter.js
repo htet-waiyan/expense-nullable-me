@@ -14,5 +14,8 @@ export default {
     MMMYYYYFromNum(value) {
       return moment(value, 'YYYYMM').format('MMM YYYY');
     },
+    DDMMMYYYYfromX(value) {
+      return moment(value, 'X').format('DD MMM YYYY');
+    },
   },
 };

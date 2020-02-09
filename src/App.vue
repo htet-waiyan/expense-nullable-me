@@ -1,11 +1,9 @@
 <template>
-  <div>
+  <div class="container">
     <navbar v-if="showNav"/>
-    <div class="all-main-content">
-      <div class="columns is-centered">
-        <div class="column is-half">
-          <router-view/>
-        </div>
+    <div class="columns all-main-content is-centered">
+      <div class="column is-half">
+        <router-view/>
       </div>
     </div>
     <footer-nav v-if="showNav" />
@@ -68,5 +66,6 @@ export default {
 
   .all-main-content {
     margin-top: 5em;
+    width: 100%;
   }
 </style>

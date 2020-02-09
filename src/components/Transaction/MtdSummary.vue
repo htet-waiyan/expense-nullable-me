@@ -2,13 +2,13 @@
     <div class="has-background-grey-darker mtd-container is-fluid container">
         <div class="columns is-mobile is-vcentered">
           <div class="column">
-            <h3 class="title is-5 has-text-white">
+            <div class="has-text-white">
               {{ month }} Overview
               <span class="month-select"
                 @click="toggleMonthSelection">
                 <v-icon name="calendar" />
               </span>
-            </h3>
+            </div>
           </div>
         </div>
         <div class="columns is-mobile" v-if="showMonthSelection">

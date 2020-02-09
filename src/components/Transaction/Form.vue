@@ -38,14 +38,14 @@
                 </div>
             </div>
         </div>
-        <div class="field">
+        <!-- <div class="field">
           <label for="tags" class="label">
             Label
           </label>
           <div class="control">
             <tag-cloud v-model="tags" multiple/>
           </div>
-        </div>
+        </div> -->
         <div class="field">
             <label class="label">Date</label>
             <div class="columns is-vcentered is-mobile">
@@ -85,7 +85,7 @@ import 'vue-awesome/icons/calendar-plus';
 import moment from 'moment';
 import { createNamespacedHelpers } from 'vuex';
 import CategoryForm from './CategoryForm.vue';
-import TagCloud from '../TagCloud.vue';
+// import TagCloud from '../TagCloud.vue';
 import { http } from '../../http';
 
 const { mapGetters, mapActions } = createNamespacedHelpers('transaction');
@@ -94,7 +94,7 @@ export default {
   name: 'TransactionForm',
   components: {
     CategoryForm,
-    TagCloud,
+    // TagCloud,
   },
   data() {
     return {

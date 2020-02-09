@@ -95,6 +95,13 @@ import 'vue-awesome/icons/shopping-cart';
 import 'vue-awesome/icons/taxi';
 import 'vue-awesome/icons/plane';
 import 'vue-awesome/icons/shopping-bag';
+import 'vue-awesome/icons/utensils';
+import 'vue-awesome/icons/pizza-slice';
+import 'vue-awesome/icons/birthday-cake';
+import 'vue-awesome/icons/bacon';
+import 'vue-awesome/icons/money-bill-alt';
+import 'vue-awesome/icons/plane-departure';
+import 'vue-awesome/icons/bed';
 import { createNamespacedHelpers } from 'vuex';
 import { debounce } from 'lodash';
 import { http } from '../../http';
@@ -147,6 +154,18 @@ export default {
           { name: 'dumbbell', scale: 2 },
           { name: 'baby', scale: 2 },
           { name: 'tv', scale: 2 },
+        ],
+        7: [
+          { name: 'hamburger', scale: 2 },
+          { name: 'utensils', scale: 2 },
+          { name: 'birthday-cake', scale: 2 },
+          { name: 'pizza-slice', scale: 2 },
+        ],
+        8: [
+          { name: 'bacon', scale: 2 },
+          { name: 'money-bill-alt', scale: 2 },
+          { name: 'plane-departure', scale: 2 },
+          { name: 'bed', scale: 2 },
         ],
       },
       title: '',
@@ -215,5 +234,8 @@ export default {
 
   .category-icon.selected {
     color:rgb(90, 90, 90);
+  }
+  .category-container {
+    margin-bottom: 10em;
   }
 </style>

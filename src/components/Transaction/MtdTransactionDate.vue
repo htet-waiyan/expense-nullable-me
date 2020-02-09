@@ -16,7 +16,7 @@
         <div class="columns bd-b-l-1 is-mobile is-vcentered transaction-row"
           v-for="trans in groupBy"
           :key="trans._id"
-          @dblclick="removeExpense(trans)">
+          @click="goToDetails(trans)">
           <div class="column has-text-left">
             <p>{{ trans.category.title }}</p>
             <p class="has-text-grey-light is-size-6">{{ trans.description }}</p>
@@ -44,25 +44,13 @@ export default {
   name: 'MtdTransactionDate',
   props: ['transactions'],
   methods: {
-    ...mapActions(['fetchMtdTransactions', 'fetchAllCategories', 'removeTransaction']),
+    ...mapActions(['fetchMtdTransactions', 'fetchAllCategories', 'removeTransaction', 'setSelectedTrx']),
     isToday(value) {
       return +value === +moment().format('YYYYMMDD');
     },
-    removeExpense(expense) {
-      const isCurrentMonth = moment(expense.timestamp, 'X').format('YYYYMM') === moment().format('YYYYMM');
-      if (!isCurrentMonth) {
-        alert('Not allowed to remove past expenses');
-        return;
-      }
-      // eslint-disable-next-line no-restricted-globals
-      const result = confirm('Are you sure to remove this expense record');
-      if (result) {
-        this.removeTransaction(expense._id)
-          .then(() => {
-            this.toast('Successfully deleted an expense record');
-            this.$emit('deleted', expense);
-          });
-      }
+    goToDetails(expense) {
+      this.setSelectedTrx(expense);
+      this.$router.push({ name: 'TransactionDetailIndex', params: { id: expense._id } });
     },
   },
 };

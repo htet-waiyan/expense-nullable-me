@@ -8,6 +8,7 @@ import {
   SET_EXPENSE,
   RESET_MTD_TRANSACTIONS,
   SET_DATA_READY,
+  SET_SELECT_TRX,
 } from './type.mutation';
 
 import { http } from '../../http';
@@ -23,6 +24,7 @@ const state = {
   expense: 0,
   transactions: {},
   dataReady: false,
+  selectedTransaction: {},
 };
 
 const mutations = {
@@ -49,6 +51,9 @@ const mutations = {
   },
   [SET_DATA_READY](_state, payload) {
     _state.dataReady = payload;
+  },
+  [SET_SELECT_TRX](_state, payload) {
+    _state.selectedTransaction = payload;
   },
 };
 
@@ -114,6 +119,9 @@ const actions = {
         return response.data;
       });
   },
+  setSelectedTrx({ commit }, trx) {
+    commit(SET_SELECT_TRX, trx);
+  },
 };
 
 const getters = {
@@ -123,6 +131,7 @@ const getters = {
   transactions: _state => _state.transactions,
   expense: _state => _state.expense,
   dataReady: _state => _state.dataReady,
+  selectedTransaction: _state => _state.selectedTransaction,
 };
 
 export default {
