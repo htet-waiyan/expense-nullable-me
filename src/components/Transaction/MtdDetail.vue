@@ -2,7 +2,7 @@
   <div class="mtd-transaction-details">
     <div class="columns is-vcentered is-mobile bd-b-1">
         <div class="column">
-            <h5 class="title is-5">Transaction Detail</h5>
+            <h5 class="title is-5">{{ selectedTransaction.description }}</h5>
             <h5 class="subtitle is-6">{{ selectedTransaction.timestamp | DDMMMYYYYfromX }}</h5>
         </div>
     </div>
@@ -14,13 +14,13 @@
             {{ currencyCode }}{{ selectedTransaction.amount }}
         </div>
     </div>
-    <div class="columns is-vcentered is-mobile bd-b-1">
+    <!-- <div class="columns is-vcentered is-mobile bd-b-1">
         <div class="column">
             <p>
                 {{ selectedTransaction.description }}
             </p>
         </div>
-    </div>
+    </div> -->
     <!-- <div class="columns is-vcentered is-mobile .bd-b-1">
         <div class="column has-text-centered">
             <button class="button is-dark is-fullwidth">
