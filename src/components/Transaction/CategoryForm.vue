@@ -2,20 +2,32 @@
   <div class="category-container">
       <div class="field">
           <label for="name" class="label">Category Name</label>
-          <div class="control"
-            :class="{'has-icons-right': !title}">
+          <div class="control has-icons-right">
               <input type="text" class="input"
-                :class="{'is-danger': !title}"
+                :class="{'is-danger': !title || isNameTaken}"
+                @input="getNameCount"
                 v-model="title">
-              <span v-if="!title" :class="{'icon is-small is-right': !title}">
+              <span v-if="nameValidating"
+                class="icon is-small is-right">
+                <v-icon name="spinner"/>
+              </span>
+              <span v-if="!title || isNameTaken"
+                class="icon is-small is-right">
                 <v-icon name="exclamation-triangle"/>
               </span>
+              <span v-if="title && !isNameTaken && !nameValidating"
+                style="color: green"
+                class="icon is-small is-right">
+                <v-icon name="check"/>
+              </span>
               <p v-if="!title" :class="{'help is-danger': !title}">Name is required</p>
+              <p v-if="isNameTaken"
+                :class="{'help is-danger': isNameTaken}">Name is not available</p>
           </div>
       </div>
       <div class="field">
           <div class="control">
-              <compact v-model="colors"/>
+            <compact v-model="colors"/>
           </div>
       </div>
       <div class="field icon-container">
@@ -75,7 +87,24 @@ import 'vue-awesome/icons/dumbbell';
 import 'vue-awesome/icons/baby';
 import 'vue-awesome/icons/tv';
 import 'vue-awesome/icons/exclamation-triangle';
+import 'vue-awesome/icons/spinner';
+import 'vue-awesome/icons/check';
+import 'vue-awesome/icons/hamburger';
+import 'vue-awesome/icons/plug';
+import 'vue-awesome/icons/shopping-cart';
+import 'vue-awesome/icons/taxi';
+import 'vue-awesome/icons/plane';
+import 'vue-awesome/icons/shopping-bag';
+import 'vue-awesome/icons/utensils';
+import 'vue-awesome/icons/pizza-slice';
+import 'vue-awesome/icons/birthday-cake';
+import 'vue-awesome/icons/bacon';
+import 'vue-awesome/icons/money-bill-alt';
+import 'vue-awesome/icons/plane-departure';
+import 'vue-awesome/icons/bed';
 import { createNamespacedHelpers } from 'vuex';
+import { debounce } from 'lodash';
+import { http } from '../../http';
 
 const { mapActions } = createNamespacedHelpers('transaction');
 
@@ -126,10 +155,24 @@ export default {
           { name: 'baby', scale: 2 },
           { name: 'tv', scale: 2 },
         ],
+        7: [
+          { name: 'hamburger', scale: 2 },
+          { name: 'utensils', scale: 2 },
+          { name: 'birthday-cake', scale: 2 },
+          { name: 'pizza-slice', scale: 2 },
+        ],
+        8: [
+          { name: 'bacon', scale: 2 },
+          { name: 'money-bill-alt', scale: 2 },
+          { name: 'plane-departure', scale: 2 },
+          { name: 'bed', scale: 2 },
+        ],
       },
       title: '',
       colorLabel: '',
       icon: '',
+      isNameTaken: false,
+      nameValidating: false,
     };
   },
   computed: {
@@ -137,7 +180,7 @@ export default {
       return this.$store.state.loading;
     },
     isFormValid() {
-      return !!this.title;
+      return !!this.title && !this.isNameTaken;
     },
   },
   methods: {
@@ -160,6 +203,18 @@ export default {
           this.$emit('created', data);
         });
     },
+    getNameCount: debounce(function () {
+      this.nameValidating = true;
+      http.get(`/category/count?name=${this.title}`)
+        .then((response) => {
+          this.nameValidating = false;
+          this.isNameTaken = !!response.data.count;
+        })
+        .catch(() => {
+          this.$store.dispatch('setNetworkError', true);
+          this.nameValidating = false;
+        });
+    }, 500),
   },
 };
 </script>
@@ -179,5 +234,8 @@ export default {
 
   .category-icon.selected {
     color:rgb(90, 90, 90);
+  }
+  .category-container {
+    margin-bottom: 10em;
   }
 </style>

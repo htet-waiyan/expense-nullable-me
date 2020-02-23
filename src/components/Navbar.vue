@@ -1,16 +1,19 @@
 <template>
-    <div class="columns is-mobile is-vcentered">
-      <div class="column is-one-fifth">
-        <button class="button is-white">
+    <div class="columns is-mobile spllit-navbar is-vcentered">
+      <div class="column is-gapless is-one-fifth">
+        <button class="button is-white"
+          v-if="!hideBackButton"
+          @click="back">
           <v-icon name="chevron-left" />
         </button>
       </div>
-      <div class="column has-text-centered">
-        Transaction
+      <div class="column is-gapless has-text-centered">
+        {{ navTitle }}
       </div>
-      <div class="column is-one-fifth has-text-right">
-        <button class="button is-white">
-          <v-icon name="user"/>
+      <div class="column is-gapless is-one-fifth has-text-right">
+        <button class="button is-white"
+          @click="logout">
+          <v-icon name="sign-out-alt"/>
         </button>
       </div>
     </div>
@@ -22,5 +25,44 @@ import 'vue-awesome/icons/user';
 
 export default {
   name: 'Navbar',
+  computed: {
+    navTitle() {
+      const route = this.$route.matched.find(r => r.name === this.$route.name);
+      if (route) {
+        return route.props.default.label;
+      }
+      return '';
+    },
+    hideBackButton() {
+      const route = this.$route.matched.find(r => r.name === this.$route.name);
+      if (route) {
+        return route.props.default.hideBack;
+      }
+      return true;
+    },
+  },
+  methods: {
+    back() {
+      this.$router.go(-1);
+    },
+    goToProfile() {
+      this.$router.push('/profile');
+    },
+    logout() {
+      localStorage.removeItem('auth_token');
+      this.$router.push('/');
+    },
+  },
 };
 </script>
+
+<style scoped>
+  .spllit-navbar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    left: 0;
+    z-index: 1030;
+    background-color: #fff;
+  }
+</style>
