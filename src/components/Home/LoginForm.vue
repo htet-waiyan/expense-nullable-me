@@ -4,7 +4,7 @@
       <h3 class="subtitle is-4">Spllit</h3>
       <h4 class="subtitle is-5">A simple way to track all your expenses at one place.</h4>
       <div class="field">
-        <a href="http://localhost:3001/auth/connect"
+        <a :href="connectUrl"
           class="button is-dark is-fullwidth">Login with Google</a>
       </div>
     </div>
@@ -41,6 +41,9 @@ export default {
     },
     isSignupForm() {
       return this.currentForm === 'SignUp';
+    },
+    connectUrl() {
+      return `${process.env.VUE_APP_AS_URL}/auth/connect`;
     },
   },
   methods: {
