@@ -21,9 +21,9 @@ jobs:
     - name: npm install
       run: |
         npm i
-    - name: Install vue-cli And Production Build
+    - name: Production Build
       run: |
-        npm install @vue/cli && npm run build
+        npm run build
     - name: Deploy to S3
       uses: jakejarvis/s3-sync-action@master
       with:
