@@ -105,6 +105,7 @@ import 'vue-awesome/icons/bed';
 import { createNamespacedHelpers } from 'vuex';
 import { debounce } from 'lodash';
 import { http } from '../../http';
+import utilMixins from '../../mixins/util';
 
 const { mapActions } = createNamespacedHelpers('transaction');
 
@@ -113,6 +114,7 @@ export default {
   components: {
     Compact,
   },
+  mixins: [utilMixins],
   data() {
     return {
       colors: {},
@@ -192,11 +194,13 @@ export default {
       return this.icon === name;
     },
     createCategory() {
+      const user = this.getUserProfile();
       const payload = {
         title: this.title,
         description: '',
         colorLabel: this.colors.hex,
         icon: this.icon,
+        user: user._id,
       };
       this.createNewCategory(payload)
         .then((data) => {

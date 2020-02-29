@@ -22,6 +22,7 @@ protectedHttp.interceptors.response.use(response => response,
   (error) => {
     if (error.response.status === 401) {
       localStorage.removeItem('auth_token');
+      localStorage.removeItem('loggedInUser');
       return router.push('/');
     }
     return Promise.reject(error);
