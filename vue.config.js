@@ -7,9 +7,9 @@ module.exports = {
       start_url: '.',
     },
     iconPaths: {
-      favicon32: 'img/icons/favicon-32x32-spllit.png',
-      favicon16: 'img/icons/favicon-16x16-spllit.png',
-      appleTouchIcon: 'img/icons/apple-touch-icon-spllit.png',
+      favicon32: 'img/icons/favicon-32x32.png',
+      favicon16: 'img/icons/favicon-16x16.png',
+      appleTouchIcon: 'img/icons/apple-touch-icon.png',
     },
   },
 };
