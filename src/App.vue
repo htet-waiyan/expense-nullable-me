@@ -29,7 +29,10 @@ export default {
   created() {
     const isAuth = localStorage.getItem('auth_token');
     if (isAuth) {
-      this.$store.dispatch('profile/fetchProfile');
+      this.$store.dispatch('profile/fetchProfile')
+        .then((user) => {
+          localStorage.setItem('loggedInUser', JSON.stringify(user));
+        });
     }
   },
 };
@@ -38,6 +41,8 @@ export default {
 <style>
   html,body {
     height: 100%;
+    width: 100%;
+    overflow-x: hidden;
   }
   .input-error {
     border: 2px solid #ddd;
@@ -66,6 +71,5 @@ export default {
 
   .all-main-content {
     margin-top: 5em;
-    width: 100%;
   }
 </style>

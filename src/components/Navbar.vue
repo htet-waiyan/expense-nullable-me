@@ -50,6 +50,7 @@ export default {
     },
     logout() {
       localStorage.removeItem('auth_token');
+      localStorage.removeItem('loggedInUser');
       this.$router.push('/');
     },
   },

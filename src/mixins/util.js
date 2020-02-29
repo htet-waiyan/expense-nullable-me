@@ -10,5 +10,9 @@ export default {
         Icon: 'check-circle',
       });
     },
+    getUserProfile() {
+      const userString = localStorage.getItem('loggedInUser');
+      return JSON.parse(userString);
+    },
   },
 };
