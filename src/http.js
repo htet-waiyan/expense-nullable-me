@@ -8,7 +8,10 @@ const protectedHttp = axios.create({
 const publicHttp = axios.create({ baseURL: process.env.VUE_APP_AS_URL });
 
 protectedHttp.interceptors.request.use((config) => {
-  config.headers = { authorization: `Bearer ${localStorage.getItem('auth_token')}` };
+  config.headers = {
+    authorization: `Bearer ${localStorage.getItem('auth_token')}`,
+    'x-app-key': process.env.VUE_APP_KEY,
+  };
   return config;
 }, (error) => {
   if (error.response.status === 401) {
